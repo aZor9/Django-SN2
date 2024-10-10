@@ -1,3 +1,4 @@
 # Fichiers Python compilés
 *.pyc
 __pycache__/
+Django/Parcoursup/__pycache__/models.cpython-312.pyc
