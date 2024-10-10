@@ -18,7 +18,7 @@ class Institution(models.Model):
     name = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
-    is_validated = models.BooleanField(default=False)  # L'institution doit être validée par un admin
+    is_validated = models.BooleanField(default=False)  
 
     def __str__(self):
         return self.name
@@ -39,7 +39,6 @@ class Program(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        # On empêche la création du programme si l'institution n'est pas validée
         if not self.institution.is_validated:
             raise ValidationError("L'institution n'est pas encore validée par un administrateur.")
         super().save(*args, **kwargs)
