@@ -26,4 +26,3 @@ def login_view(request):
         else:
             messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
     
-    return render(request, 'login.html')
