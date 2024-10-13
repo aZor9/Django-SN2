@@ -8,6 +8,11 @@
             <ul class="navbar-nav ms-auto">
                 <!-- Si l'utilisateur est connecté -->
                 {% if user.is_authenticated %}
+                    {% if request.user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}">Accueil</a>
                     </li>
