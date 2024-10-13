@@ -6,3 +6,7 @@ Pour lancer le serveur :
     ```python manage.py runserver```
     si cela ne fonctionne pas : se deplacer dans le repertoire Django avec : 
         ``cd .\Django\``
+
+
+user1 : Azerty10 
+Admin : password
