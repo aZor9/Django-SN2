@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Tableau de bord d'administration</h1>
+  <ul>
+    <li><a href="{% url 'manage_users' %}">Gérer les utilisateurs</a></li>
+    <li><a href="{% url 'manage_offers' %}">Gérer les offres</a></li>
+  </ul>
+{% endblock %}

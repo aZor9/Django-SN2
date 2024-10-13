@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Gestion des offres</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Description</th>
+        <th>Statut</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for offer in offers %}
+      <tr>
+        <td>{{ offer.title }}</td>
+        <td>{{ offer.description }}</td>
+        <td>
+          {% if offer.is_approved %}
+            Approuvée
+          {% else %}
+            En attente
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'approve_offer' offer.id 'approve' %}" class="btn btn-success">Approuver</a>
+          <a href="{% url 'approve_offer' offer.id 'reject' %}" class="btn btn-danger">Rejeter</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

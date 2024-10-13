@@ -57,3 +57,15 @@ class Application(models.Model):
 
     def __str__(self):
         return f"{self.student} - {self.program} ({self.status})"
+
+
+class Offer(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    image_url = models.URLField(max_length=200)  # Lien vers l'image
+    category = models.CharField(max_length=100)  # Catégorie ou domaine
+    is_approved = models.BooleanField(default=False)  # Statut de l'offre (validée ou non)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE)  # Utilisateur qui a ajouté l'offre
+
+    def __str__(self):
+        return self.title
