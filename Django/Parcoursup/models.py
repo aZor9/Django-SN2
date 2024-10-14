@@ -69,3 +69,16 @@ class Offer(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+
+class OfferPro(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image_url = models.URLField()  # URL pour l'image
+    institution = models.ForeignKey('Institution', on_delete=models.CASCADE)  # Lien vers l'institution
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_approved = models.BooleanField(default=False)  # Pour que les admins puissent approuver les offres
+
+    def __str__(self):
+        return self.title

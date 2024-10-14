@@ -104,3 +104,24 @@ def approve_offer(request, offer_id, action):
     offer.save()
     messages.success(request, f"L'offre {offer.title} a été {action}ée.")
     return redirect('manage_offers')
+
+
+
+
+
+# Offres de la part d'un institut : 
+@login_required
+def propose_offer(request):
+    if request.user.is_authenticated and request.user.is_institution:  # Vérifie si l'utilisateur est une institution
+        if request.method == 'POST':
+            form = OfferProForm(request.POST)  # Utilisez le formulaire OfferPro
+            if form.is_valid():
+                offer = form.save(commit=False)
+                offer.institution = request.user.institution  # Assurez-vous d'avoir une relation entre l'utilisateur et l'institution
+                offer.save()
+                return redirect('offer_success')  # redirige vers une page de succès ou une autre page après soumission
+        else:
+            form = OfferProForm()  # Utilisez le formulaire OfferPro
+        return render(request, 'propose_offer.html', {'form': form})
+    else:
+        return redirect('home')  # Redirige vers la page d'accueil si l'utilisateur n'est pas autorisé

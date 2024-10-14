@@ -9,6 +9,7 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('', views.home, name='home'), #nouvelle page principal
     path('register/', views.register, name='register'),
+    path('propose-offer/', views.propose_offer, name='propose_offer'),
 
     # Admin : 
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
