@@ -1,13 +1,14 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .models import Program, Offer
 
-
+from .models import OfferPro  # Modifiez le nom ici
+from .forms import OfferProForm  # Modifiez le nom ici
 
 def hello_world(request):
     return HttpResponse("Hello, World et Bonjour")
