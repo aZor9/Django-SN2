@@ -33,7 +33,7 @@ class Student(models.Model):
 
 
 # Modèle Etablissement (Établissement)
-class etablissement(models.Model):
+class Etablissement(models.Model):
     name = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
