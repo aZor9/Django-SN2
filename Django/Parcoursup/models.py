@@ -4,21 +4,35 @@ from django.core.exceptions import ValidationError
 
 # Modèle Étudiant
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    student_id = models.CharField(max_length=20, unique=True)
-    date_of_birth = models.DateField()
-    high_school = models.CharField(max_length=200)
+    user = models.OneToOneField(User, on_delete=models.CASCADE) # name of user
+    student_id = models.CharField(max_length=20, unique=True) #Id
+    date_of_birth = models.DateField() # date de naissance
+    high_school = models.CharField(max_length=200) #lycée
+    firstname = models.CharField(max_length=30) #prenom
 
+    # Liste prédéfinie de domaines d'études
+    STUDY_DOMAINS = [
+        ('science', 'Science'),
+        ('literature', 'Literature'),
+        ('engineering', 'Engineering'),
+        ('arts', 'Arts'),
+        ('business', 'Business'),
+        ('medicine', 'Medicine'),
+    ]
 
+    study_domain = models.CharField(
+        max_length=50,
+        choices=STUDY_DOMAINS,
+        default='science'  # Valeur par défaut
+    )
 
-    
 
     def __str__(self):
         return f"{self.user.username} ({self.student_id})"
 
 
-# Modèle Institution (Établissement)
-class Institution(models.Model):
+# Modèle Etablissement (Établissement)
+class etablissement(models.Model):
     name = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
@@ -29,13 +43,13 @@ class Institution(models.Model):
 
     def clean(self):
         if not self.is_validated:
-            raise ValidationError("L'institution n'est pas validée.")
+            raise ValidationError("L'etablissement n'est pas validée.")
 
 
 # Modèle Program (Programme)
 class Program(models.Model):
     name = models.CharField(max_length=255)
-    institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
+    etablissement = models.ForeignKey(etablissement, on_delete=models.CASCADE)
     level = models.CharField(max_length=50)
     description = models.TextField()
 
@@ -43,8 +57,8 @@ class Program(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        if not self.institution.is_validated:
-            raise ValidationError("L'institution n'est pas encore validée par un administrateur.")
+        if not self.etablissement.is_validated:
+            raise ValidationError("L'etablissement n'est pas encore validée par un administrateur.")
         super().save(*args, **kwargs)
 
 
@@ -80,7 +94,7 @@ class OfferPro(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     image_url = models.URLField()  # URL pour l'image
-    institution = models.ForeignKey('Institution', on_delete=models.CASCADE)  # Lien vers l'institution
+    etablissement = models.ForeignKey('Etablissement', on_delete=models.CASCADE)  # Lien vers l'institution
     created_at = models.DateTimeField(auto_now_add=True)
     is_approved = models.BooleanField(default=False)  # Pour que les admins puissent approuver les offres
 
