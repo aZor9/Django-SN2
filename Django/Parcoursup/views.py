@@ -55,6 +55,29 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
+def register_etudiant(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Votre compte a été créé avec succès, {username} !')
+            return redirect('login')  # Redirection vers la page de connexion après inscription
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
+
+def register_etablissement(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Votre compte a été créé avec succès, {username} !')
+            return redirect('login')  # Redirection vers la page de connexion après inscription
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
 
 
 ## Admin : 
