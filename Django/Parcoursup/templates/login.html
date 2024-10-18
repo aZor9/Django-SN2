@@ -16,11 +16,16 @@
 
                 <!-- Message d'erreur -->
                 {% if messages %}
-                <div class="alert alert-danger">
                     {% for message in messages %}
-                    <p>{{ message }}</p>
+                        <div class="alert 
+                            {% if message.tags == 'success' %}alert-success
+                            {% elif message.tags == 'error' %}alert-danger
+                            {% elif message.tags == 'warning' %}alert-warning
+                            {% elif message.tags == 'info' %}alert-info
+                            {% endif %}">
+                            <p>{{ message }}</p>
+                        </div>
                     {% endfor %}
-                </div>
                 {% endif %}
 
                 <form method="post" action="{% url 'login' %}">
