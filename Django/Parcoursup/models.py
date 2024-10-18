@@ -9,6 +9,10 @@ class Student(models.Model):
     date_of_birth = models.DateField()
     high_school = models.CharField(max_length=200)
 
+
+
+    
+
     def __str__(self):
         return f"{self.user.username} ({self.student_id})"
 
