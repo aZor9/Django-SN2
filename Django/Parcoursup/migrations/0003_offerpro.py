@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('image_url', models.URLField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('is_approved', models.BooleanField(default=False)),
-                ('institution', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Parcoursup.institution')),
+                ('etablissement', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Parcoursup.etablissement')),
             ],
         ),
     ]

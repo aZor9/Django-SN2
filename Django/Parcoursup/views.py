@@ -39,7 +39,7 @@ def index (request):
 
 
 def home (request):
-    programs = Program.objects.filter(institution__is_validated=True)  # On affiche seulement les offres validées
+    programs = Program.objects.filter(etablissement__is_validated=True)  # On affiche seulement les offres validées
     return render(request, 'home.html', {'programs': programs})
 
 
@@ -80,8 +80,8 @@ def change_user_role(request, user_id, role):
     if role == 'student':
         user.is_staff = False
         user.is_superuser = False
-    elif role == 'institution':
-        user.is_staff = True  # Par exemple, pour les institutions
+    elif role == 'etablissement':
+        user.is_staff = True  # Par exemple, pour les etablissements
     elif role == 'admin':
         user.is_superuser = True  # Admin
     user.save()
@@ -113,12 +113,12 @@ def approve_offer(request, offer_id, action):
 # Offres de la part d'un institut : 
 @login_required
 def propose_offer(request):
-    if request.user.is_authenticated and request.user.is_institution:  # Vérifie si l'utilisateur est une institution
+    if request.user.is_authenticated and request.user.is_etablissement:  # Vérifie si l'utilisateur est une etablissement
         if request.method == 'POST':
             form = OfferProForm(request.POST)  # Utilisez le formulaire OfferPro
             if form.is_valid():
                 offer = form.save(commit=False)
-                offer.institution = request.user.institution  # Assurez-vous d'avoir une relation entre l'utilisateur et l'institution
+                offer.etablissement = request.user.etablissement  # Assurez-vous d'avoir une relation entre l'utilisateur et l'etablissement
                 offer.save()
                 return redirect('offer_success')  # redirige vers une page de succès ou une autre page après soumission
         else:
