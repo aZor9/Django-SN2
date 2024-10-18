@@ -50,7 +50,7 @@ class Etablissement(models.Model):
 # Modèle Program (Programme)
 class Program(models.Model):
     name = models.CharField(max_length=255)
-    etablissement = models.ForeignKey(etablissement, on_delete=models.CASCADE)
+    etablissement = models.ForeignKey(Etablissement, on_delete=models.CASCADE)
     level = models.CharField(max_length=50)
     description = models.TextField()
 
