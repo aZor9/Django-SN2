@@ -9,6 +9,7 @@ class Student(models.Model):
     date_of_birth = models.DateField() # date de naissance
     high_school = models.CharField(max_length=200) #lycée
     firstname = models.CharField(max_length=30) #prenom
+    email = models.EmailField(max_length=127, unique=True) #mail
 
     # Liste prédéfinie de domaines d'études
     STUDY_DOMAINS = [
