@@ -9,6 +9,8 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('', views.home, name='home'), #nouvelle page principal
     path('register/', views.register, name='register'),
+    path('register/', views.register, name='register_etudiant'),
+    path('register/', views.register, name='register_etablissement'),
     path('propose-offer/', views.propose_offer, name='propose_offer'),
 
     # Admin : 
