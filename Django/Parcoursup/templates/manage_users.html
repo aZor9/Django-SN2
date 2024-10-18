@@ -1,37 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Gestion des utilisateurs</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nom d'utilisateur</th>
-        <th>Email</th>
-        <th>Rôle actuel</th>
-        <th>Changer de rôle</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for user in users %}
-      <tr>
-        <td>{{ user.username }}</td>
-        <td>{{ user.email }}</td>
-        <td>
-          {% if user.is_superuser %}
-            Admin
-          {% elif user.is_staff %}
-            Institution
-          {% else %}
-            Utilisateur
-          {% endif %}
-        </td>
-        <td>
-          <a href="{% url 'change_user_role' user.id 'student' %}" class="btn btn-primary">Étudiant</a>
-          <a href="{% url 'change_user_role' user.id 'institution' %}" class="btn btn-secondary">Établissement</a>
-          <a href="{% url 'change_user_role' user.id 'admin' %}" class="btn btn-danger">Admin</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<h1>Gestion des utilisateurs</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nom d'utilisateur</th>
+      <th>Email</th>
+      <th>Rôle actuel</th>
+      <th>Changer de rôle</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        {% if user.is_superuser %}
+        Admin
+        {% elif user.is_staff %}
+        Établissement
+        {% else %}
+        Étudiant
+        {% endif %}
+      </td>
+      <td>
+        <a href="{% url 'change_user_role' user.id 'student' %}" class="btn btn-primary">Étudiant</a>
+        <a href="{% url 'change_user_role' user.id 'institution' %}" class="btn btn-secondary">Établissement</a>
+        <a href="{% url 'change_user_role' user.id 'admin' %}" class="btn btn-danger">Admin</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
