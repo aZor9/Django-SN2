@@ -1,14 +1,10 @@
 from django import forms
-from .models import OfferPro  
 from .models import Student
 from .models import Etablissement
 from django.contrib.auth.models import User
 
 
-class OfferProForm(forms.ModelForm):  # Changez également le nom de la classe
-    class Meta:
-        model = OfferPro  # Utilisez le modèle OfferPro
-        fields = ['title', 'description', 'image_url']  # Listez les champs que vous souhaitez dans le formulaire
+
 
 class student_form(forms.ModelForm):
     # Champs provenant du modèle User
@@ -44,18 +40,18 @@ class student_form(forms.ModelForm):
 
 class Etablissement_form(forms.ModelForm):
     # Champs provenant du modèle User
-    # username = forms.CharField(max_length=150, required=True)
+    name = forms.CharField(max_length=150, required=True)
     password = forms.CharField(widget=forms.PasswordInput, required=True)
     email = forms.EmailField(required=True)
 
     class Meta:
         model = Etablissement
-        fields = ['name', 'adress', 'city', 'country']  # Champs du modèle Etablissement     plus demandé : 'high_school'
+        fields = ['adress', 'city', 'country']  # Champs du modèle Etablissement     plus demandé : 'high_school'
 
     def save(self, commit=True):
         # Sauvegarde des informations User et Etablissement
         user = User.objects.create_user(
-            name=self.cleaned_data['name'],
+            username=self.cleaned_data['name'],
             password=self.cleaned_data['password'],
             email=self.cleaned_data['email']
         )
