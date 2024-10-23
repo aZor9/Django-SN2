@@ -8,5 +8,4 @@ Pour lancer le serveur :
         ``cd .\Django\``
 
 
-Nouveau : 
 admin : Azerty10 : Administrateur

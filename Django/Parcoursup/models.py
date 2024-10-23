@@ -37,7 +37,7 @@ class Student(models.Model):
 # Modèle Etablissement (Établissement)
 class Etablissement(models.Model):
     name = models.CharField(max_length=255, default= 'name')
-    email = models.EmailField(max_length=127 , default= 'email@email') #mail
+    email = models.EmailField(max_length=127 , default= 'email@email.com') #mail
     adress = models.CharField(max_length=200, default= 'adress')
     city = models.CharField(max_length=100, default= 'city')
     country = models.CharField(max_length=100, default=' country')
