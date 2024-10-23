@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 # Modèle Étudiant
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) # name of user
-    student_id = models.CharField(max_length=20, unique=True) #Id
+    student_id = models.CharField(max_length=20) #Id
     date_of_birth = models.DateField() # date de naissance
     # high_school = models.CharField(max_length=200) #lycée
     firstname = models.CharField(max_length=30) #prenom
@@ -36,11 +36,11 @@ class Student(models.Model):
 
 # Modèle Etablissement (Établissement)
 class Etablissement(models.Model):
-    # name = models.CharField(max_length=255)
-    # email = models.EmailField(max_length=127, unique=True) #mail
-    adress = models.CharField(max_length=200)
-    city = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
+    name = models.CharField(max_length=255, default= 'name')
+    email = models.EmailField(max_length=127 , default= 'email@email') #mail
+    adress = models.CharField(max_length=200, default= 'adress')
+    city = models.CharField(max_length=100, default= 'city')
+    country = models.CharField(max_length=100, default=' country')
     is_validated = models.BooleanField(default=False)  
 
     # Liste prédéfinie de domaines d'études
@@ -60,7 +60,6 @@ class Etablissement(models.Model):
     )
 
     
-
     def __str__(self):
         return self.name
 
