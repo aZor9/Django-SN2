@@ -32,9 +32,11 @@ class Student(models.Model):
         return f"{self.user.username} ({self.student_id})"
 
 
+
+
 # Modèle Etablissement (Établissement)
 class Etablissement(models.Model):
-    name = models.CharField(max_length=255)
+    # name = models.CharField(max_length=255)
     email = models.EmailField(max_length=127, unique=True) #mail
     adress = models.CharField(max_length=200)
     city = models.CharField(max_length=100)

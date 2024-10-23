@@ -40,7 +40,7 @@ class student_form(forms.ModelForm):
 
 class Etablissement_form(forms.ModelForm):
     # Champs provenant du modèle User
-    name = forms.CharField(max_length=150, required=True)
+    username = forms.CharField(max_length=150, required=True)
     password = forms.CharField(widget=forms.PasswordInput, required=True)
     email = forms.EmailField(required=True)
 
@@ -51,7 +51,7 @@ class Etablissement_form(forms.ModelForm):
     def save(self, commit=True):
         # Sauvegarde des informations User et Etablissement
         user = User.objects.create_user(
-            username=self.cleaned_data['name'],
+            username=self.cleaned_data['username'],
             password=self.cleaned_data['password'],
             email=self.cleaned_data['email']
         )
