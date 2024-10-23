@@ -42,24 +42,7 @@
         <div class="container">
             <h2 class="text-center mb-4">Les offres disponibles</h2>
             <div class="row">
-                {% for program in programs %}
-                <!-- Offre {{ forloop.counter }} -->
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Image de l'offre">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ program.name }}</h5>
-                            <p class="card-text">{{ program.description|truncatewords:20 }}</p>
-                            <a href="#" class="btn btn-primary">Voir l'offre</a>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Offre proposée par {{ program.etablissement.name }}</small>
-                        </div>
-                    </div>
-                </div>
-                {% empty %}
-                <p>Aucune offre n'est disponible pour le moment.</p>
-                {% endfor %}
+               
             </div>
         </div>
     </section>
