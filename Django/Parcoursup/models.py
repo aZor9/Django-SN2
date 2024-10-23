@@ -63,37 +63,6 @@ class Etablissement(models.Model):
         return self.name
 
 
-# Modèle Program (Programme)
-class Program(models.Model):
-    name = models.CharField(max_length=255)
-    etablissement = models.ForeignKey(Etablissement, on_delete=models.CASCADE)
-    level = models.CharField(max_length=50)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        if not self.etablissement.is_validated:
-            raise ValidationError("L'etablissement n'est pas encore validée par un administrateur.")
-        super().save(*args, **kwargs)
-
-
-# Modèle Application (Candidature d'étudiant à un programme)
-class Application(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    program = models.ForeignKey(Program, on_delete=models.CASCADE)
-    application_date = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=50, choices=[
-        ('pending', 'En attente'),
-        ('accepted', 'Acceptée'),
-        ('rejected', 'Rejetée')
-    ])
-
-    def __str__(self):
-        return f"{self.student} - {self.program} ({self.status})"
-
-
 class Offer(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -105,15 +74,16 @@ class Offer(models.Model):
     def __str__(self):
         return self.title
     
-
-
-class OfferPro(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    image_url = models.URLField()  # URL pour l'image
-    etablissement = models.ForeignKey('Etablissement', on_delete=models.CASCADE)  # Lien vers l'institution
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_approved = models.BooleanField(default=False)  # Pour que les admins puissent approuver les offres
+# Modèle Application (Candidature d'étudiant à un programme)
+class Application(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
+    application_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=50, choices=[
+        ('pending', 'En attente'),
+        ('accepted', 'Acceptée'),
+        ('rejected', 'Rejetée')
+    ])
 
     def __str__(self):
-        return self.title
+        return f"{self.student} - {self.program} ({self.status})"
