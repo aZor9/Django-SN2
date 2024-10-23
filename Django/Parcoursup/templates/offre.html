@@ -1,32 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <div class="container">
     <div class="row">
         {% if offres %}
-            {% for offer in offres %}
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ offer.title }}</h5>
-                            <h5 class="card-title">{{ offer.added_by.adress }}</h5>
-                            <p class="card-text">{{ offer.description }}</p>
-                            <p class="card-text">
-                                {% if offer.is_approved %}
-                                <span class="badge bg-success">Approuvée</span>
-                                {% else %}
-                                <span class="badge bg-warning text-dark">En attente</span>
-                                {% endif %}
-                            </p>
-                            <a href="{% url 'approve_offer' offer.id 'approve' %}" class="btn btn-success">Approuver</a>
-                            <a href="{% url 'approve_offer' offer.id 'reject' %}" class="btn btn-danger">Rejeter</a>
-                        </div>
-                    </div>
+        {% for offre in offres %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ offre.title }}</h5>
+                    <h5 class="card-title">{{ offre.added_by.adress }}</h5>
+                    <p class="card-text">{{ offre.description }}</p>
+                    <img src="{{ offre.image_url }}" alt="img">
+                    <p class="card-text">
+                        {% if offre.is_approved %}
+                        <span class="badge bg-success">Approuvée</span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark">En attente</span>
+                        {% endif %}
+                    </p>
+                    <a href="{% url 'approve_offer' offre.id 'approve' %}" class="btn btn-success">Approuver</a>
+                    <a href="{% url 'approve_offer' offre.id 'reject' %}" class="btn btn-danger">Rejeter</a>
                 </div>
-            {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
         {% else %}
-            <p class="text-center">Pas d'offre en cours</p>
+        <p class="text-center">Pas d'offre en cours</p>
         {% endif %}
     </div>
 </div>
