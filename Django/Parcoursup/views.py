@@ -5,11 +5,8 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .models import Program, Offer
-from .forms import student_form, Etablissement_form
-
-from .models import OfferPro  # Modifiez le nom ici
-from .forms import OfferProForm  # Modifiez le nom ici
+from .models import *
+from .forms import *
 
 
 def login_view(request):
