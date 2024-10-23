@@ -44,18 +44,18 @@ class student_form(forms.ModelForm):
 
 class Etablissement_form(forms.ModelForm):
     # Champs provenant du modèle User
-    username = forms.CharField(max_length=150, required=True)
+    # username = forms.CharField(max_length=150, required=True)
     password = forms.CharField(widget=forms.PasswordInput, required=True)
     email = forms.EmailField(required=True)
 
     class Meta:
         model = Etablissement
-        fields = ['username', 'adress', 'city', 'country']  # Champs du modèle Etablissement     plus demandé : 'high_school'
+        fields = ['name', 'adress', 'city', 'country']  # Champs du modèle Etablissement     plus demandé : 'high_school'
 
     def save(self, commit=True):
         # Sauvegarde des informations User et Etablissement
         user = User.objects.create_user(
-            username=self.cleaned_data['username'],
+            name=self.cleaned_data['name'],
             password=self.cleaned_data['password'],
             email=self.cleaned_data['email']
         )
