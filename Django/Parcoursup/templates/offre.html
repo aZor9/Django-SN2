@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        {% if offers %}
+            {% for offer in offers %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ offer.title }}</h5>
+                            <p class="card-text">{{ offer.description }}</p>
+                            <p class="card-text">
+                                {% if offer.is_approved %}
+                                <span class="badge bg-success">Approuvée</span>
+                                {% else %}
+                                <span class="badge bg-warning text-dark">En attente</span>
+                                {% endif %}
+                            </p>
+                            <a href="{% url 'approve_offer' offer.id 'approve' %}" class="btn btn-success">Approuver</a>
+                            <a href="{% url 'approve_offer' offer.id 'reject' %}" class="btn btn-danger">Rejeter</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">Pas d'offre en cours</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

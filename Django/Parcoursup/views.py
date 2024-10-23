@@ -80,6 +80,15 @@ def register_etablissement(request):
     return render(request, 'register.html', {'form': form})
 
 
+
+
+def offre(request):
+    offres = Offer.objects.all()
+    return render(request, 'offre.html', {'offres': offres})
+
+
+
+
 ## Admin : 
 # Vérifie si l'utilisateur est admin
 def is_admin(user):

@@ -13,6 +13,12 @@ urlpatterns = [
     path('register/', views.register, name='register_etablissement'),
     path('propose-offer/', views.propose_offer, name='propose_offer'),
 
+
+    # User
+    path('offre/', views.offre, name='offre'),
+
+
+
     # Admin : 
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('admin_manage-users/', views.manage_users, name='manage_users'),
