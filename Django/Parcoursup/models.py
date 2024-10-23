@@ -62,10 +62,6 @@ class Etablissement(models.Model):
     def __str__(self):
         return self.name
 
-    def clean(self):
-        if not self.is_validated:
-            raise ValidationError("L'etablissement n'est pas validée.")
-
 
 # Modèle Program (Programme)
 class Program(models.Model):
@@ -104,7 +100,7 @@ class Offer(models.Model):
     image_url = models.URLField(max_length=200)  # Lien vers l'image
     category = models.CharField(max_length=100)  # Catégorie ou domaine
     is_approved = models.BooleanField(default=False)  # Statut de l'offre (validée ou non)
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE)  # Utilisateur qui a ajouté l'offre
+    added_by = models.ForeignKey(Etablissement, on_delete=models.CASCADE)  # Utilisateur qui a ajouté l'offre
 
     def __str__(self):
         return self.title

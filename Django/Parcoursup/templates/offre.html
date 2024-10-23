@@ -4,12 +4,13 @@
 
 <div class="container">
     <div class="row">
-        {% if offers %}
-            {% for offer in offers %}
+        {% if offres %}
+            {% for offer in offres %}
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
                             <h5 class="card-title">{{ offer.title }}</h5>
+                            <h5 class="card-title">{{ offer.added_by.adress }}</h5>
                             <p class="card-text">{{ offer.description }}</p>
                             <p class="card-text">
                                 {% if offer.is_approved %}
