@@ -2,17 +2,16 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # path('', views.hello_world, name='hello_world'),
-    path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
-    # path('', views.index, name='index'),
-    path('home/', views.home, name='home'),
-    path('', views.home, name='home'), #nouvelle page principal
-    path('register/', views.register, name='register'),
-    path('register/', views.register, name='register_etudiant'),
-    path('register/', views.register, name='register_etablissement'),
-    path('propose-offer/', views.propose_offer, name='propose_offer'),
+    path('home/', views.home, name='home'), #page pincipale
+    path('', views.home, name='home'), #page principale
 
+    path('login/', views.login_view, name='login'), #conexion
+    path('logout/', views.logout_view, name='logout'), #deconexion
+    path('register_etudiant/', views.register_student, name='register_etudiant'), #inscription etudiante
+    path('register_etablissement/', views.register_etablissement, name='register_etablissement'), #inscrption etablissement
+
+
+    path('propose-offer/', views.propose_offer, name='propose_offer'),
 
     # User
     path('offre/', views.offre, name='offre'),
