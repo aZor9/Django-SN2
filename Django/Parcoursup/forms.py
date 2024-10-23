@@ -62,7 +62,7 @@ class Etablissement_form(forms.ModelForm):
         
 
         Etablissement = super(Etablissement_form, self).save(commit=False)
-        Etablissement.user = user  # Associe l'utilisateur créé avec l'étudiant
+        Etablissement.user = user  
         
         if commit:
             user.save()
