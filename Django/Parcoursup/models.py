@@ -7,7 +7,7 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) # name of user
     student_id = models.CharField(max_length=20, unique=True) #Id
     date_of_birth = models.DateField() # date de naissance
-    high_school = models.CharField(max_length=200) #lycée
+    # high_school = models.CharField(max_length=200) #lycée
     firstname = models.CharField(max_length=30) #prenom
     email = models.EmailField(max_length=127, unique=True) #mail
 
@@ -35,9 +35,29 @@ class Student(models.Model):
 # Modèle Etablissement (Établissement)
 class Etablissement(models.Model):
     name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=127, unique=True) #mail
+    adress = models.CharField(max_length=200)
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
     is_validated = models.BooleanField(default=False)  
+
+    # Liste prédéfinie de domaines d'études
+    STUDY_DOMAINS = [
+        ('science', 'Science'),
+        ('literature', 'Literature'),
+        ('engineering', 'Engineering'),
+        ('arts', 'Arts'),
+        ('business', 'Business'),
+        ('medicine', 'Medicine'),
+    ]
+
+    study_domain = models.CharField(
+        max_length=50,
+        choices=STUDY_DOMAINS,
+        default='science'  # Valeur par défaut
+    )
+
+    
 
     def __str__(self):
         return self.name

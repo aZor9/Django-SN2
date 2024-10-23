@@ -16,7 +16,20 @@ class student_form(forms.ModelForm):
 
     class Meta:
         model = Student
-        fields = ['firstname', 'date_of_birth', 'high_school', 'study_domain', 'student_id']  # Champs du modèle Student
+        fields = ['firstname', 'date_of_birth', 'study_domain', 'student_id']  # Champs du modèle Student     plus demandé : 'high_school'
 
-
-
+    def save(self, commit=True):
+        # Sauvegarde des informations User et Student
+        user = User.objects.create_user(
+            username=self.cleaned_data['username'],
+            password=self.cleaned_data['password'],
+            email=self.cleaned_data['email']
+        )
+        
+        student = super(StudentForm, self).save(commit=False)
+        student.user = user  # Associe l'utilisateur créé avec l'étudiant
+        
+        if commit:
+            user.save()
+            student.save()
+        return student

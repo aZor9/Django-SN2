@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .models import Program, Offer
+from .forms import student_form
 
 from .models import OfferPro  # Modifiez le nom ici
 from .forms import OfferProForm  # Modifiez le nom ici
@@ -43,17 +44,34 @@ def home (request):
     return render(request, 'home.html', {'programs': programs})
 
 
+# def register(request):
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             username = form.cleaned_data.get('username')
+#             messages.success(request, f'Votre compte a été créé avec succès, {username} !')
+#             return redirect('login')  # Redirection vers la page de connexion après inscription
+#     else:
+#         form = UserCreationForm()
+#     return render(request, 'register.html', {'form': form})
+
+
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = student_form(request.POST)
+        
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Votre compte a été créé avec succès, {username} !')
-            return redirect('login')  # Redirection vers la page de connexion après inscription
+            return redirect('home')
     else:
-        form = UserCreationForm()
+        form = student_form()
+
     return render(request, 'register.html', {'form': form})
+
+
+
+
 
 def register_etudiant(request):
     if request.method == 'POST':
