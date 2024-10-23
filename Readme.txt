@@ -10,10 +10,3 @@ Pour lancer le serveur :
 
 Nouveau : 
 admin : Azerty10 : Administrateur
-
-
-
-Ancien : 
-user1 : Azerty10 : Utilisateur
-Ecole : Azerty10 : Etablissement
-Admin : password : Administrateur
