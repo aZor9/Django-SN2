@@ -11,7 +11,6 @@ urlpatterns = [
     path('register_etablissement/', views.register_etablissement, name='register_etablissement'), #inscrption etablissement
 
 
-    path('propose-offer/', views.propose_offer, name='propose_offer'),
 
     # User
     path('offre/', views.offre, name='offre'),
