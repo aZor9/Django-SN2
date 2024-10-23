@@ -37,7 +37,7 @@ class Student(models.Model):
 # Modèle Etablissement (Établissement)
 class Etablissement(models.Model):
     # name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=127, unique=True) #mail
+    # email = models.EmailField(max_length=127, unique=True) #mail
     adress = models.CharField(max_length=200)
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
@@ -68,7 +68,7 @@ class Etablissement(models.Model):
 class Offer(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    image_url = models.URLField(max_length=200)  # Lien vers l'image
+    image_url = models.URLField(max_length=2000)  # Lien vers l'image
     category = models.CharField(max_length=100)  # Catégorie ou domaine
     is_approved = models.BooleanField(default=False)  # Statut de l'offre (validée ou non)
     added_by = models.ForeignKey(Etablissement, on_delete=models.CASCADE)  # Utilisateur qui a ajouté l'offre
