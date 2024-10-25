@@ -67,7 +67,7 @@ class Etablissement(models.Model):
 class Offer(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    image_url = models.URLField(max_length=10000)  # Lien vers l'image
+    image_url = models.URLField(max_length=100000)  # Lien vers l'image
     category = models.CharField(max_length=100)  # Catégorie ou domaine
     is_approved = models.BooleanField(default=False)  # Statut de l'offre (validée ou non)
     added_by = models.ForeignKey(Etablissement, on_delete=models.CASCADE)  # Utilisateur qui a ajouté l'offre
