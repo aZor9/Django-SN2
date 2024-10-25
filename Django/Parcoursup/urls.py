@@ -15,6 +15,8 @@ urlpatterns = [
 
     # User
     path('offre/', views.offre, name='offre'),
+    path('offre/<int:offer_id>/', views.offre, name='offre_id'),
+    
 
 
 
