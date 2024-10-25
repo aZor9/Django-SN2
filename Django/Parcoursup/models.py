@@ -68,8 +68,21 @@ class Offer(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     image_url = models.TextField(max_length=100000)  # Lien vers l'image
-    category = models.CharField(max_length=100)  # Catégorie ou domaine
-    is_approved = models.BooleanField(default=False)  # Statut de l'offre (validée ou non)
+    # Liste prédéfinie de domaines d'études
+    STUDY_DOMAINS = [
+        ('science', 'Science'),
+        ('literature', 'Literature'),
+        ('engineering', 'Engineering'),
+        ('arts', 'Arts'),
+        ('business', 'Business'),
+        ('medicine', 'Medicine'),
+    ]
+
+    study_domain = models.CharField(
+        max_length=50,
+        choices=STUDY_DOMAINS,
+        default='science'  # Valeur par défaut
+    )
     added_by = models.ForeignKey(Etablissement, on_delete=models.CASCADE)  # Utilisateur qui a ajouté l'offre
 
     def __str__(self):
