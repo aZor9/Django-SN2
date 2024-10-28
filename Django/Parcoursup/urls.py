@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from . import views_admin
+from . import views_offre
 
 urlpatterns = [
     path('home/', views.home, name='home'), #page pincipale
@@ -14,10 +15,9 @@ urlpatterns = [
 
 
     # User
-    path('offre/', views.offre, name='offre'),
-    path('offre/<int:offer_id>/', views.offre, name='offre_id'),
+    path('offre/', views_offre.offres, name='offre'),
+    path('offre/<int:offer_id>/', views_offre.offre, name='offre_id'),
     
-
 
 
     # Admin : 

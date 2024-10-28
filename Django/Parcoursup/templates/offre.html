@@ -9,12 +9,13 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ offre.title }}</h5>
-                    <h5 class="card-title text-center">{{ offre.added_by.name }}</h5>
+                    <h5 class="card-title text-center">{{ offre.added_by.country }}</h5>
                     <h5 class="card-title text-center">{{ offre.study_domain }}</h5>
 
                     <div class="ratio ratio-4x3">
                         <img src="{{ offre.image_url }}" class="img-fluid rounded-3" alt="img">
                     </div>
+                    <a class="btn btn-primary mt-3" href="{% url 'offre_id' offer_id=offre.id %}">Voir plus</a>
 
                 </div>
             </div>
