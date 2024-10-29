@@ -10,6 +10,9 @@
 
 <body>
     <div class="container">
+        <a class="btn btn-secondary my-3" href="{% url 'home' %}">Page d'accueil</a>
+    </div>
+    <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-6">
                 <h2 class="text-center mb-4">Connexion</h2>
@@ -42,7 +45,8 @@
                 </form>
 
                 <p class="text-center mt-3">
-                    Vous n'avez pas de compte ? <a href="{% url 'home' %}">Inscrivez-vous</a>
+                    Vous n'avez pas de compte ? <br>
+                    Inscription : <a href="{% url 'register_etudiant' %}">Etudiant</a> | <a href="{% url 'register_etablissement' %}">Etablissement</a>
                 </p>
             </div>
         </div>
