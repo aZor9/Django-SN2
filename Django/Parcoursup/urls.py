@@ -4,21 +4,21 @@ from . import views_admin
 from . import views_offre
 
 urlpatterns = [
+    # Pages principales : 
     path('home/', views.home, name='home'), #page pincipale
     path('', views.home, name='home'), #page principale
 
+    # Authentification :
     path('login/', views.login_view, name='login'), #conexion
     path('logout/', views.logout_view, name='logout'), #deconexion
     path('register_etudiant/', views.register_student, name='register_etudiant'), #inscription etudiante
     path('register_etablissement/', views.register_etablissement, name='register_etablissement'), #inscrption etablissement
 
 
-
-    # User
+    # Offres :
     path('offre/', views_offre.offres, name='offre'),
     path('offre/<int:offer_id>/', views_offre.offre, name='offre_id'),
     
-
 
     # Admin : 
     path('admin_dashboard/', views_admin.admin_dashboard, name='admin_dashboard'),
