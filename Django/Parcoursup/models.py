@@ -13,12 +13,12 @@ class Student(models.Model):
 
     # Liste prédéfinie de domaines d'études
     STUDY_DOMAINS = [
-        ('science', 'Science'),
-        ('literature', 'Literature'),
-        ('engineering', 'Engineering'),
+        ('science', 'Sciences'),
+        ('literature', 'Littérature'),
+        ('engineering', 'Ingénierie'),
         ('arts', 'Arts'),
-        ('business', 'Business'),
-        ('medicine', 'Medicine'),
+        ('business', 'Affaires'),
+        ('medicine', 'Médecine'),
     ]
 
     study_domain = models.CharField(
@@ -38,19 +38,19 @@ class Student(models.Model):
 class Etablissement(models.Model):
     name = models.CharField(max_length=255, default= 'name')
     email = models.EmailField(max_length=127 , default= 'email@email.com') #mail
-    adress = models.CharField(max_length=200, default= 'adress')
-    city = models.CharField(max_length=100, default= 'city')
-    country = models.CharField(max_length=100, default=' country')
+    adress = models.CharField(max_length=200)
+    city = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
     is_validated = models.BooleanField(default=False)  
 
     # Liste prédéfinie de domaines d'études
     STUDY_DOMAINS = [
-        ('science', 'Science'),
-        ('literature', 'Literature'),
-        ('engineering', 'Engineering'),
+        ('science', 'Sciences'),
+        ('literature', 'Littérature'),
+        ('engineering', 'Ingénierie'),
         ('arts', 'Arts'),
-        ('business', 'Business'),
-        ('medicine', 'Medicine'),
+        ('business', 'Affaires'),
+        ('medicine', 'Médecine'),
     ]
 
     study_domain = models.CharField(
@@ -70,12 +70,12 @@ class Offer(models.Model):
     image_url = models.TextField(max_length=100000)  # Lien vers l'image
     # Liste prédéfinie de domaines d'études
     STUDY_DOMAINS = [
-        ('science', 'Science'),
-        ('literature', 'Literature'),
-        ('engineering', 'Engineering'),
+        ('science', 'Sciences'),
+        ('literature', 'Littérature'),
+        ('engineering', 'Ingénierie'),
         ('arts', 'Arts'),
-        ('business', 'Business'),
-        ('medicine', 'Medicine'),
+        ('business', 'Affaires'),
+        ('medicine', 'Médecine'),
     ]
 
     study_domain = models.CharField(
