@@ -34,26 +34,26 @@ def home (request):
 ## Incription Etudiant
 def register_student(request):
     if request.method == 'POST':
-        form = student_form(request.POST)
+        form = StudentForm(request.POST)
         
         if form.is_valid():
             form.save()
             return redirect('home')
     else:
-        form = student_form()
+        form = StudentForm()
 
     return render(request, 'register_student.html', {'form': form})
 
 ## Incription Etablissement
 def register_etablissement(request):
     if request.method == 'POST':
-        form = Etablissement_form(request.POST)
+        form = EtablissementForm(request.POST)
         
         if form.is_valid():
             form.save()
             return redirect('home')
     else:
-        form = Etablissement_form()
+        form = EtablissementForm()
 
     return render(request, 'register_etablissement.html', {'form': form})
 

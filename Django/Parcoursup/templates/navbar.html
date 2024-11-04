@@ -9,31 +9,40 @@
             <ul class="navbar-nav ms-auto">
                 <!-- Si l'utilisateur est connecté -->
                 {% if user.is_authenticated %}
-                {% if request.user.is_superuser %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
-                </li>
-                {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Mes candidatures</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Mes offres</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-danger text-white" href="{% url 'logout' %}">Déconnexion</a>
-                </li>
+                    <!-- Lien pour l'Admin (Superuser) -->
+                    {% if user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+                        </li>
+                    {% endif %}
+
+                    <!-- Lien spécifique pour l'utilisateur étudiant -->
+                    {% if user.userprofile.user_type == 'student' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'candidature' %}">Mes candidatures</a>
+                        </li>
+                    {% endif %}
+
+                    <!-- Lien spécifique pour l'utilisateur établissement -->
+                    {% if user.userprofile.user_type == 'etablissement' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'offre_create' %}">Créer une offre</a>
+                        </li>
+                    {% endif %}
+
+                    <!-- Lien commun pour tous les utilisateurs connectés -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'offre' %}">Les offres</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-danger text-white" href="{% url 'logout' %}">Déconnexion</a>
+                    </li>
+
+                <!-- Si l'utilisateur n'est pas connecté -->
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Connexion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary text-white mx-1" href="{% url 'register_etudiant' %}">S'inscrire</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary text-white" href="{% url 'register_etablissement' %}">S'inscrire
-                        Établissement</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>

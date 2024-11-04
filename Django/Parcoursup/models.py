@@ -1,17 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 
-# Modèle Étudiant
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE) # name of user
-    student_id = models.CharField(max_length=20) #Id
-    date_of_birth = models.DateField() # date de naissance
-    # high_school = models.CharField(max_length=200) #lycée
-    firstname = models.CharField(max_length=30) #prenom
-    email = models.EmailField(max_length=127, unique=True) #mail
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  # Lien vers l'utilisateur
+    date_of_birth = models.DateField()
+    firstname = models.CharField(max_length=30)
 
-    # Liste prédéfinie de domaines d'études
     STUDY_DOMAINS = [
         ('science', 'Sciences'),
         ('literature', 'Littérature'),
@@ -24,26 +18,21 @@ class Student(models.Model):
     study_domain = models.CharField(
         max_length=50,
         choices=STUDY_DOMAINS,
-        default='science'  # Valeur par défaut
+        default='science'
     )
 
-
     def __str__(self):
-        return f"{self.user.username} ({self.student_id})"
+        return f"{self.user.username} ({self.firstname})"
 
 
-
-
-# Modèle Etablissement (Établissement)
 class Etablissement(models.Model):
-    name = models.CharField(max_length=255, default= 'name')
-    email = models.EmailField(max_length=127 , default= 'email@email.com') #mail
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  # Lien vers l'utilisateur
+    name = models.CharField(max_length=255)
     adress = models.CharField(max_length=200)
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
-    is_validated = models.BooleanField(default=False)  
+    is_validated = models.BooleanField(default=False)
 
-    # Liste prédéfinie de domaines d'études
     STUDY_DOMAINS = [
         ('science', 'Sciences'),
         ('literature', 'Littérature'),
@@ -56,39 +45,28 @@ class Etablissement(models.Model):
     study_domain = models.CharField(
         max_length=50,
         choices=STUDY_DOMAINS,
-        default='science'  # Valeur par défaut
+        default='science'
     )
 
-    
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.city})"
 
 
 class Offer(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    image_url = models.TextField(max_length=100000)  # Lien vers l'image
-    # Liste prédéfinie de domaines d'études
-    STUDY_DOMAINS = [
-        ('science', 'Sciences'),
-        ('literature', 'Littérature'),
-        ('engineering', 'Ingénierie'),
-        ('arts', 'Arts'),
-        ('business', 'Affaires'),
-        ('medicine', 'Médecine'),
-    ]
-
+    image_url = models.URLField(max_length=500)  # Utilisation d'URLField pour les URL
     study_domain = models.CharField(
         max_length=50,
-        choices=STUDY_DOMAINS,
-        default='science'  # Valeur par défaut
+        choices=Etablissement.STUDY_DOMAINS,
+        default='science'
     )
-    added_by = models.ForeignKey(Etablissement, on_delete=models.CASCADE)  # Utilisateur qui a ajouté l'offre
+    added_by = models.ForeignKey(Etablissement, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
-    
-# Modèle Application (Candidature d'étudiant à un programme)
+        return f"Offer: {self.title} ({self.study_domain})"
+
+
 class Application(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
@@ -100,4 +78,16 @@ class Application(models.Model):
     ])
 
     def __str__(self):
-        return f"{self.student} - {self.program} ({self.status})"
+        return f"Application by {self.student.user.username} for {self.offer.title} ({self.status})"
+
+
+class UserProfile(models.Model):
+    USER_TYPE_CHOICES = [
+        ('student', 'Étudiant'),
+        ('etablissement', 'Établissement'),
+    ]
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.user_type}"

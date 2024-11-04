@@ -10,14 +10,7 @@ from .forms import *
 
 
 
-def offres(request):
-    offres = Offer.objects.all()
-    return render(request, 'offre.html', {'offres': offres})
+def candidature(request):
+    candidatures = Application.objects.all()
+    return render(request, 'candidature.html', {'candidatures': candidatures})
 
-
-def offre(request, offer_id):
-    offre = get_object_or_404(Offer, id=offer_id)
-    return render(request, 'offre_detail.html', {'offre': offre})
-
-def offre_create(request):
-    return render(request, 'offre_create.html')

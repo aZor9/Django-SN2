@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from . import views_admin
 from . import views_offre
+from . import views_candidature
 
 urlpatterns = [
     # Pages principales : 
@@ -18,6 +19,12 @@ urlpatterns = [
     # Offres :
     path('offre/', views_offre.offres, name='offre'),
     path('offre/<int:offer_id>/', views_offre.offre, name='offre_id'),
+    path('offre/create/', views_offre.offre_create, name='offre_create'),
+
+
+    # Candidatures :
+    path('candidature/', views_candidature.candidature, name='candidature'),
+    
     
 
     # Admin : 
