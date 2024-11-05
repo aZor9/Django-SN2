@@ -1,8 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
+<div class="container my-5">
+    <h2 class="text-center">Mes Offres</h2>
 
-      zej
+    {% if offres %}
+        <div class="row">
+            {% for offre in offres %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="{{ offre.image_url }}" class="card-img-top" alt="{{ offre.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ offre.title }}</h5>
+                            <p class="card-text">{{ offre.description }}</p>
+                            <p><strong>Domaine d'étude :</strong> {{ offre.get_study_domain_display }}</p>
+                            <a href="{% url 'offre_id' offer_id=offre.id %}" class="btn btn-primary">Voir Détails</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">Vous n'avez aucune offre disponible pour le moment.</p>
+    {% endif %}
 </div>
 {% endblock %}

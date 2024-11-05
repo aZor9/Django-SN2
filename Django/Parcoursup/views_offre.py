@@ -56,8 +56,23 @@ def offre(request, offer_id):
 
 # def offer_success(request):
 #     return render(request, 'offre.html')
+@login_required
 def offre_show(request):
-    return render(request, 'offre_show.html')
+    # Vérifiez que l'utilisateur est un établissement
+    user_profile = UserProfile.objects.get(user=request.user)
+    
+    if user_profile.user_type == 'etablissement':
+        # Récupérez uniquement les offres ajoutées par cet établissement
+        offres = Offer.objects.filter(added_by=user_profile)
+    else:
+        # Si l'utilisateur n'est pas un établissement, redirigez ou affichez un message d'erreur
+        offres = None
+
+    context = {
+        'offres': offres,
+        'user_profile': user_profile,
+    }
+    return render(request, 'offre_show.html', context)
 
 
 
