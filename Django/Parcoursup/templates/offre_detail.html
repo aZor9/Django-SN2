@@ -101,11 +101,11 @@
                         </div>
                         <div>
                             {% if candidature.status == 'pending' %}
-                                <form method="post" action="{% url 'gerer_candidature' candidature_id=candidature.id %}" class="d-inline">
+                                <form method="post" action="{% url 'gerer_candidature' candidature_id=candidature.id action='accept' %}" class="d-inline">
                                     {% csrf_token %}
                                     <button type="submit" name="action" value="accept" class="btn btn-success btn-sm">Accepter</button>
                                 </form>
-                                <form method="post" action="{% url 'gerer_candidature' candidature_id=candidature.id %}" class="d-inline">
+                                <form method="post" action="{% url 'gerer_candidature' candidature_id=candidature.id action='reject' %}" class="d-inline">
                                     {% csrf_token %}
                                     <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Refuser</button>
                                 </form>

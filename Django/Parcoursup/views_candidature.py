@@ -55,10 +55,14 @@ def postuler(request, offer_id):
 
 
 
-
 @login_required
 def gerer_candidature(request, candidature_id):
-    candidature = get_object_or_404(Application, id=candidature_id)
+    # Vérifier si la candidature existe
+    try:
+        candidature = Application.objects.get(id=candidature_id)
+    except Application.DoesNotExist:
+        messages.error(request, "La candidature n'existe pas.")
+        return redirect('offre_id', offer_id=request.POST.get('offer_id'))  # Rediriger vers l'offre en cas d'erreur
     
     if request.method == 'POST' and request.user.userprofile.user_type == 'etablissement':
         action = request.POST.get('action')
@@ -71,5 +75,6 @@ def gerer_candidature(request, candidature_id):
             messages.warning(request, "La candidature a été refusée.")
         
         candidature.save()
-    
-    return redirect('offre_id', offre_id=candidature.offer.id)
+
+    # Rediriger vers l'offre associée
+    return redirect('offre_id', offer_id=candidature.offer.id)
