@@ -88,3 +88,23 @@ def offre_create(request):
         form = OfferForm()
     
     return render(request, 'offre_create.html', {'form': form})
+
+@login_required
+def offre_edit(request, offer_id):
+    # Récupérer l'offre en vérifiant qu'elle appartient à l'utilisateur
+    user_profile = request.user.userprofile
+    offre = get_object_or_404(Offer, id=offer_id, added_by=user_profile)
+
+    if request.method == 'POST':
+        form = OfferForm(request.POST, instance=offre)
+        if form.is_valid():
+            form.save()
+            return redirect('offre_show')  # Redirection vers la liste des offres de l'utilisateur
+    else:
+        form = OfferForm(instance=offre)
+    
+    context = {
+        'form': form,
+        'offre': offre
+    }
+    return render(request, 'offre_edit.html', context)

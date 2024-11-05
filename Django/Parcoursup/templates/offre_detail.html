@@ -10,7 +10,7 @@
                     <h5 class="card-title display-6 text-primary">{{ offre.title }}</h5>
                     <h6 class="card-subtitle mb-3 text-muted">Domaine d'étude : {{ offre.get_study_domain_display }}</h6>
 
-                    <!-- Image de l'offre avec ajustements pour un rendu plus moderne -->
+                    <!-- Image de l'offre -->
                     <div class="d-flex justify-content-center mb-3">
                         <img src="{{ offre.image_url }}" class="img-fluid rounded shadow-sm" 
                              alt="Image de l'offre" style="max-height: 300px; object-fit: cover;">
@@ -22,21 +22,25 @@
                 </div>
 
                 <!-- Section de candidature -->
-                <div class="bg-light p-3">
-                    {% if has_applied %}
-                        {% for candidature in candidatures %}
-                            <p class="alert alert-info text-center"> Vous avez déjà postulé pour cette offre : {{ candidature.get_status_display }}</p>
-                        {% endfor %}
-                    {% else %}
-                        <p class="alert alert-success text-center mb-4">Vous pouvez postuler pour cette offre.</p>
-                        <div class="text-center">
-                            <form method="post" action="{% url 'postuler' offer_id=offre.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary px-4 py-2">Postuler</button>
-                            </form>
-                        </div>
+                    {% if user.userprofile.user_type == 'student' %}
+                    <div class="bg-light p-3">
+                        {% if has_applied %}
+                            {% for candidature in candidatures %}
+                                <p class="alert alert-info text-center">
+                                    Vous avez déjà postulé pour cette offre : {{ candidature.get_status_display }}
+                                </p>
+                            {% endfor %}
+                        {% else %}
+                            <p class="alert alert-success text-center mb-4">Vous pouvez postuler pour cette offre.</p>
+                            <div class="text-center">
+                                <form method="post" action="{% url 'postuler' offer_id=offre.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary px-4 py-2">Postuler</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
                     {% endif %}
-                </div>
 
                 <!-- Bouton retour -->
                 <div class="text-center my-4">

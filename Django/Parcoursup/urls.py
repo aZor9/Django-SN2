@@ -21,6 +21,8 @@ urlpatterns = [
     path('offre/<int:offer_id>/', views_offre.offre, name='offre_id'),
     path('offre/create/', views_offre.offre_create, name='offre_create'),
     path('offre/show/', views_offre.offre_show, name='offre_show'),
+    path('offre/edit/', views_offre.offre_edit, name='offre_edit'),
+
 
 
     # Candidatures :
