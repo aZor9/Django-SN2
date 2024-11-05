@@ -37,12 +37,16 @@ def register_student(request):
         form = StudentForm(request.POST)
         
         if form.is_valid():
-            form.save()
+            user_profile = form.save()  # Création de UserProfile via le formulaire
+            login(request, user_profile.user)  # Connexion automatique de l'utilisateur après inscription
+            messages.success(request, "Inscription réussie ! Bienvenue, étudiant.")
             return redirect('home')
     else:
         form = StudentForm()
 
     return render(request, 'register_student.html', {'form': form})
+
+
 
 ## Incription Etablissement
 def register_etablissement(request):
@@ -50,7 +54,9 @@ def register_etablissement(request):
         form = EtablissementForm(request.POST)
         
         if form.is_valid():
-            form.save()
+            user_profile = form.save()  # Création de UserProfile via le formulaire
+            login(request, user_profile.user)  # Connexion automatique de l'utilisateur après inscription
+            messages.success(request, "Inscription réussie ! Bienvenue, établissement.")
             return redirect('home')
     else:
         form = EtablissementForm()
@@ -68,16 +74,19 @@ def offre(request):
 # Offres de la part d'un institut : 
 @login_required
 def propose_offer(request):
-    if request.user.is_authenticated and request.user.is_etablissement:  # Vérifie si l'utilisateur est une etablissement
+    # Vérifie si l'utilisateur connecté est un établissement
+    if hasattr(request.user, 'userprofile') and request.user.userprofile.user_type == 'etablissement':
         if request.method == 'POST':
-            form = OfferProForm(request.POST)  # Utilisez le formulaire OfferPro
+            form = OfferProForm(request.POST)
             if form.is_valid():
                 offer = form.save(commit=False)
-                offer.etablissement = request.user.etablissement  # Assurez-vous d'avoir une relation entre l'utilisateur et l'etablissement
+                offer.added_by = request.user.userprofile  # Lie l'offre au profil d'établissement
                 offer.save()
-                return redirect('offer_success')  # redirige vers une page de succès ou une autre page après soumission
+                messages.success(request, "Offre proposée avec succès.")
+                return redirect('offer_success')
         else:
-            form = OfferProForm()  # Utilisez le formulaire OfferPro
+            form = OfferProForm()
         return render(request, 'propose_offer.html', {'form': form})
     else:
-        return redirect('home')  # Redirige vers la page d'accueil si l'utilisateur n'est pas autorisé
+        messages.error(request, "Vous n'êtes pas autorisé à proposer une offre.")
+        return redirect('home')

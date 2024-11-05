@@ -1,61 +1,49 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Student, Etablissement, UserProfile
+from .models import UserProfile
 
 class StudentForm(forms.ModelForm):
     username = forms.CharField(max_length=150, required=True, label="Nom d'utilisateur")
     password = forms.CharField(widget=forms.PasswordInput, required=True, label="Mot de passe")
     email = forms.EmailField(required=True, label="Adresse email")
+    firstname = forms.CharField(required=True)
 
     class Meta:
-        model = Student
-        fields = ['firstname', 'date_of_birth', 'study_domain']
+        model = UserProfile
+        fields = ['firstname', 'study_domain']
         labels = {
             'firstname': "Prénom",
-            'date_of_birth': "Date de naissance",
             'study_domain': "Domaine d'étude",
+            # 'date_of_birth': "Date de naissance",
         }
 
-    def clean(self):
-        cleaned_data = super().clean()
-        # Validation des champs requis
-        if not cleaned_data.get("firstname"):
-            self.add_error('firstname', "Ce champ est requis.")
-        if not cleaned_data.get("date_of_birth"):
-            self.add_error('date_of_birth', "Ce champ est requis.")
-        if not cleaned_data.get("study_domain"):
-            self.add_error('study_domain', "Ce champ est requis.")
-        return cleaned_data
-
     def save(self, commit=True):
-        # Création de l'utilisateur associé
         user = User.objects.create_user(
             username=self.cleaned_data['username'],
             password=self.cleaned_data['password'],
             email=self.cleaned_data['email']
         )
 
-        # Création du UserProfile pour l'étudiant
+        user_profile = super().save(commit=False)
+        user_profile.user = user
+        user_profile.user_type = 'student'
+        
         if commit:
-            UserProfile.objects.create(user=user, user_type='student')
-
-        # Création de l'objet Student
-        student = super().save(commit=False)
-        student.user = user
-        student.email = self.cleaned_data['email']  # Associe l'email à l'objet Student
-
-        if commit:
-            student.save()
-        return student
+            user_profile.save()
+        return user_profile
 
 
 class EtablissementForm(forms.ModelForm):
     username = forms.CharField(max_length=150, required=True, label="Nom d'utilisateur")
     password = forms.CharField(widget=forms.PasswordInput, required=True, label="Mot de passe")
     email = forms.EmailField(required=True, label="Adresse email")
+    name = forms.CharField(required=True)
+    adress = forms.CharField(required=True)
+    city = forms.CharField(required=True)
+    country = forms.CharField(required=True)
 
     class Meta:
-        model = Etablissement
+        model = UserProfile
         fields = ['name', 'adress', 'city', 'country', 'study_domain']
         labels = {
             'name': "Nom de l'établissement",
@@ -65,37 +53,17 @@ class EtablissementForm(forms.ModelForm):
             'study_domain': "Domaine d'étude",
         }
 
-    def clean(self):
-        cleaned_data = super().clean()
-        # Validation des champs requis
-        if not cleaned_data.get("name"):
-            self.add_error('name', "Ce champ est requis.")
-        if not cleaned_data.get("adress"):
-            self.add_error('adress', "Ce champ est requis.")
-        if not cleaned_data.get("city"):
-            self.add_error('city', "Ce champ est requis.")
-        if not cleaned_data.get("country"):
-            self.add_error('country', "Ce champ est requis.")
-        if not cleaned_data.get("study_domain"):
-            self.add_error('study_domain', "Ce champ est requis.")
-        return cleaned_data
-
     def save(self, commit=True):
-        # Création de l'utilisateur associé
         user = User.objects.create_user(
             username=self.cleaned_data['username'],
             password=self.cleaned_data['password'],
             email=self.cleaned_data['email']
         )
 
-        # Création du UserProfile pour l'établissement
+        user_profile = super().save(commit=False)
+        user_profile.user = user
+        user_profile.user_type = 'etablissement'
+        
         if commit:
-            UserProfile.objects.create(user=user, user_type='etablissement')
-
-        # Création de l'objet Etablissement
-        etablissement = super().save(commit=False)
-        etablissement.user = user
-
-        if commit:
-            etablissement.save()
-        return etablissement
+            user_profile.save()
+        return user_profile
