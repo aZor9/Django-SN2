@@ -19,34 +19,20 @@
                 <h1>Candidatures pour l'offre {{ offre.id }}</h1>
 
                 {% if has_applied %}
-                    <p class="alert alert-warning">Vous avez déjà postulé pour cette offre.</p>
+                    {% for candidature in candidatures %}
+                        <p class="alert alert-info">Vous avez déjà postulé pour cette offre : {{ candidature.status }} </p>
+                    {% endfor %}
+                {% else %}
+                    <p class="alert alert-success">Vous pouvez postuler pour cette offre.</p>
+                    <div class="text-center">
+                        <form method="post" action="{% url 'postuler' offer_id=offre.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Postuler</button>
+                        </form>
+                    </div>
                 {% endif %}
                 
 
-                {% if candidatures %}
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Étudiant</th>
-                                <th>Offre</th>
-                                <th>Date de candidature</th>
-                                <th>Statut</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for candidature in candidatures %}
-                                <tr>
-                                    <td>{{ candidature.student.user.username }}</td>
-                                    <td>{{ candidature.offer.title }}</td>
-                                    <td>{{ candidature.application_date }}</td>
-                                    <td>{{ candidature.status }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                {% else %}
-                    <p>Aucune candidature trouvée pour cette offre.</p>
-                {% endif %}
 
                 <div class="text-center my-4">
                     <a href="{% url 'offre' %}" class="btn btn-secondary">Retour à la liste des offres</a>
