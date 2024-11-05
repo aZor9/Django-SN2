@@ -52,3 +52,24 @@ def postuler(request, offer_id):
 
     # Si ce n'est pas une méthode POST, redirigez vers l'offre
     return render(request, 'offre.html', {'offre': offre})
+
+
+
+
+@login_required
+def gerer_candidature(request, candidature_id):
+    candidature = get_object_or_404(Application, id=candidature_id)
+    
+    if request.method == 'POST' and request.user.userprofile.user_type == 'etablissement':
+        action = request.POST.get('action')
+        
+        if action == 'accept':
+            candidature.status = 'accepted'
+            messages.success(request, "La candidature a été acceptée.")
+        elif action == 'reject':
+            candidature.status = 'rejected'
+            messages.warning(request, "La candidature a été refusée.")
+        
+        candidature.save()
+    
+    return redirect('offre_id', offre_id=candidature.offer.id)

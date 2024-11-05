@@ -83,6 +83,50 @@
                 </div>
             </div>
         </div>
+
+    <!-- tentative -->
+     
+    <!-- Section de gestion des candidatures pour les établissements -->
+    {% if user.userprofile.user_type == 'etablissement' %}
+    <div class="bg-light rounded p-3 mt-4">
+        <h6 class="text-center text-primary">Candidatures reçues pour cette offre</h6>
+        {% if candidatures %}
+            <ul class="list-group">
+                {% for candidature in candidatures %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ candidature.student.user.username }}</strong>
+                            <span class="text-muted"> - {{ candidature.student.user.email }}</span><br>
+                            <small>Status : {{ candidature.get_status_display }}</small>
+                        </div>
+                        <div>
+                            {% if candidature.status == 'pending' %}
+                                <form method="post" action="{% url 'gerer_candidature' candidature_id=candidature.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" name="action" value="accept" class="btn btn-success btn-sm">Accepter</button>
+                                </form>
+                                <form method="post" action="{% url 'gerer_candidature' candidature_id=candidature.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Refuser</button>
+                                </form>
+                            {% else %}
+                                <span class="badge {% if candidature.status == 'accepted' %}bg-success{% else %}bg-danger{% endif %}">
+                                    {{ candidature.get_status_display }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-center text-muted">Aucune candidature reçue pour cette offre.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+
+
+
     </div>
 </div>
 {% endblock %}
