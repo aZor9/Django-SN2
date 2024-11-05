@@ -12,7 +12,7 @@
                         <div class="card-body">
                             <h4 class="card-title text-center">{{ application.offer.title }}</h4>
                             <h5 class="card-title text-center">Par : {{ application.offer.added_by.name }}</h5>
-                            <h6 class="card-title text-center">{{ application.offer.study_domain }}</h6>
+                            <h6 class="card-title text-center">{{ application.offer.get_study_domain_display }}</h6>
 
                             <div class="ratio ratio-4x3">
                                 <img src="{{ application.offer.image_url }}" class="img-fluid rounded-3" alt="img">

@@ -3,78 +3,77 @@
 {% block content %}
 <div class="container my-5">
     <div class="row justify-content-center">
+        <!-- Section principale de l'offre -->
         <div class="col-md-8 mb-4">
-            <div class="card shadow-lg border-light">
+            <div class="card shadow border-0">
                 <div class="card-body text-center">
-                    <h5 class="card-title">{{ offre.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Domaine d'étude : {{ offre.study_domain }}</h6>
-                    <img src="{{ offre.image_url }}" class="img-fluid rounded mb-3" alt="Image de l'offre"
-                        style="max-height: 300px; object-fit: cover;">
+                    <h5 class="card-title display-6 text-primary">{{ offre.title }}</h5>
+                    <h6 class="card-subtitle mb-3 text-muted">Domaine d'étude : {{ offre.get_study_domain_display }}</h6>
 
-                    <p class="card-text">
+                    <!-- Image de l'offre avec ajustements pour un rendu plus moderne -->
+                    <div class="d-flex justify-content-center mb-3">
+                        <img src="{{ offre.image_url }}" class="img-fluid rounded shadow-sm" 
+                             alt="Image de l'offre" style="max-height: 300px; object-fit: cover;">
+                    </div>
+
+                    <p class="card-text text-muted px-3" style="line-height: 1.6;">
                         {{ offre.description }}
                     </p>
                 </div>
 
-                <h1>Candidatures pour l'offre {{ offre.id }}</h1>
+                <!-- Section de candidature -->
+                <div class="bg-light p-3">
+                    {% if has_applied %}
+                        {% for candidature in candidatures %}
+                            <p class="alert alert-info text-center"> Vous avez déjà postulé pour cette offre : {{ candidature.get_status_display }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p class="alert alert-success text-center mb-4">Vous pouvez postuler pour cette offre.</p>
+                        <div class="text-center">
+                            <form method="post" action="{% url 'postuler' offer_id=offre.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary px-4 py-2">Postuler</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
 
-                {% if has_applied %}
-                    {% for candidature in candidatures %}
-                        <p class="alert alert-info">Vous avez déjà postulé pour cette offre : {{ candidature.status }} </p>
-                    {% endfor %}
-                {% else %}
-                    <p class="alert alert-success">Vous pouvez postuler pour cette offre.</p>
-                    <div class="text-center">
-                        <form method="post" action="{% url 'postuler' offer_id=offre.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Postuler</button>
-                        </form>
-                    </div>
-                {% endif %}
-                
-
-
+                <!-- Bouton retour -->
                 <div class="text-center my-4">
-                    <a href="{% url 'offre' %}" class="btn btn-secondary">Retour à la liste des offres</a>
+                    <a href="{% url 'offre' %}" class="btn btn-outline-secondary">Retour à la liste des offres</a>
                 </div>
             </div>
         </div>
 
+        <!-- Section d'informations sur l'établissement et autres offres -->
         <div class="col-md-4">
-            <!-- Informations sur l'établissement dans une carte -->
-            <div class="card shadow-sm border-light mb-4">
+            <!-- Informations sur l'établissement -->
+            <div class="card shadow-sm border-0 mb-4">
                 <div class="card-body">
-                    <h6 class="text-center">Informations de l'établissement</h6>
+                    <h6 class="text-center text-primary">Informations de l'établissement</h6>
                     <p><strong>Nom :</strong> {{ offre.added_by.name }}</p>
                     <p><strong>Email :</strong> {{ offre.added_by.user.email }}</p>
-                    <p><strong>Adresse :</strong> {{ offre.added_by.adress }},
-                        {{ offre.added_by.city }},
-                        {{ offre.added_by.country }}</p>
+                    <p><strong>Adresse :</strong> {{ offre.added_by.adress }}, {{ offre.added_by.city }}, {{ offre.added_by.country }}</p>
                 </div>
             </div>
 
-            <!-- Autres offres de l'établissement sous les informations -->
-            <div class="card shadow-sm border-light mb-4">
+            <!-- Autres offres de l'établissement -->
+            <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h6 class="text-center">Autres offres de cet établissement</h6>
-                    <ul class="list-group">
+                    <h6 class="text-center text-primary">Autres offres de cet établissement</h6>
+                    <ul class="list-group list-group-flush">
                         {% for other_offer in offre.added_by.offer_set.all %}
                             {% if other_offer.id != offre.id %}
-                                <li class="list-group-item"
-                                    style="background-color: white; border: 1px solid #dee2e6; margin-bottom: 10px;">
-                                    <a href="{% url 'offre_id' offer_id=other_offer.id %}"
-                                       style="text-decoration: none; color: black;"
-                                       onmouseover="this.style.color='grey';"
-                                       onmouseout="this.style.color='black';">
+                                <li class="list-group-item bg-light rounded-3 shadow-sm mb-2">
+                                    <a href="{% url 'offre_id' offer_id=other_offer.id %}" class="text-dark text-decoration-none"
+                                       onmouseover="this.style.color='#0d6efd';"
+                                       onmouseout="this.style.color='#333';">
                                         {{ other_offer.title }}
                                     </a>
                                 </li>
                             {% endif %}
                         {% empty %}
-                            <li class="list-group-item"
-                                style="background-color: white; border: 1px solid #dee2e6; margin-bottom: 10px;">
-                                Aucune autre offre disponible.
-                            </li>
+                            <li class="list-group-item bg-light text-center rounded-3 shadow-sm mb-2">Aucune autre offre disponible.</li>
                         {% endfor %}
                     </ul>
                 </div>
