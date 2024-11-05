@@ -87,7 +87,8 @@
     <!-- tentative -->
      
     <!-- Section de gestion des candidatures pour les établissements -->
-    {% if user.userprofile.user_type == 'etablissement' %}
+    {% if user.userprofile.user_type == 'etablissement' and user.userprofile == offre.added_by %}
+
     <div class="bg-light rounded p-3 mt-4">
         <h6 class="text-center text-primary">Candidatures reçues pour cette offre</h6>
         {% if candidatures %}
