@@ -2,4 +2,14 @@
 
 {% block content %}
 créer une offre
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Affiche le formulaire avec des paragraphes -->
+    <button type="submit">Créer l'offre</button>
+</form>
+
+
+
+
 {% endblock %}

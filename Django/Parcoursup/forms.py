@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfile
+from .models import UserProfile, Offer
 
 class StudentForm(forms.ModelForm):
     username = forms.CharField(max_length=150, required=True, label="Nom d'utilisateur")
@@ -67,3 +67,24 @@ class EtablissementForm(forms.ModelForm):
         if commit:
             user_profile.save()
         return user_profile
+
+
+
+
+
+
+
+class OfferForm(forms.ModelForm):
+    class Meta:
+        model = Offer
+        fields = ['title', 'description', 'image_url', 'study_domain']
+        labels = {
+            'title': "Titre de l'offre",
+            'description': "Description",
+            'image_url': "URL de l'image",
+            'study_domain': "Domaine d'étude",
+        }
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
+            'image_url': forms.URLInput(attrs={'placeholder': 'https://example.com/image.jpg'}),
+        }
