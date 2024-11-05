@@ -64,29 +64,5 @@ def register_etablissement(request):
     return render(request, 'register_etablissement.html', {'form': form})
 
 
-
-
-def offre(request):
-    offres = Offer.objects.all()
-    return render(request, 'offre.html', {'offres': offres})
-
-
-# Offres de la part d'un institut : 
-@login_required
-def propose_offer(request):
-    # Vérifie si l'utilisateur connecté est un établissement
-    if hasattr(request.user, 'userprofile') and request.user.userprofile.user_type == 'etablissement':
-        if request.method == 'POST':
-            form = OfferProForm(request.POST)
-            if form.is_valid():
-                offer = form.save(commit=False)
-                offer.added_by = request.user.userprofile  # Lie l'offre au profil d'établissement
-                offer.save()
-                messages.success(request, "Offre proposée avec succès.")
-                return redirect('offer_success')
-        else:
-            form = OfferProForm()
-        return render(request, 'propose_offer.html', {'form': form})
-    else:
-        messages.error(request, "Vous n'êtes pas autorisé à proposer une offre.")
-        return redirect('home')
+def profile(request):
+    return render(request, 'profile.html')
