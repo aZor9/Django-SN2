@@ -3,19 +3,22 @@ from django.contrib.auth.models import User
 from .models import UserProfile, Offer
 
 class StudentForm(forms.ModelForm):
-    username = forms.CharField(max_length=150, required=True, label="Nom d'utilisateur")
-    password = forms.CharField(widget=forms.PasswordInput, required=True, label="Mot de passe")
-    email = forms.EmailField(required=True, label="Adresse email")
-    firstname = forms.CharField(required=True)
+    firstname = forms.CharField(required=True, label="Prénom", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Prénom"}) )
+    username = forms.CharField(max_length=150, required=True, label="Nom d'utilisateur", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Nom d'utilisateur"}) )
+    email = forms.EmailField(required=True, label="Adresse email", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "example@mail.com"}) )
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), required=True, label="Mot de passe" )
 
     class Meta:
         model = UserProfile
-        fields = ['firstname', 'study_domain']
+        fields = ['study_domain']
         labels = {
-            'firstname': "Prénom",
-            'study_domain': "Domaine d'étude",
-            # 'date_of_birth': "Date de naissance",
+            'study_domain': "Domaine d'étude  (A selectionner) ",
         }
+        widgets = {
+            'study_domain': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    field_order = ['firstname', 'username', 'email', 'password', 'study_domain']
 
     def save(self, commit=True):
         user = User.objects.create_user(
@@ -34,24 +37,26 @@ class StudentForm(forms.ModelForm):
 
 
 class EtablissementForm(forms.ModelForm):
-    username = forms.CharField(max_length=150, required=True, label="Nom d'utilisateur")
-    password = forms.CharField(widget=forms.PasswordInput, required=True, label="Mot de passe")
-    email = forms.EmailField(required=True, label="Adresse email")
-    name = forms.CharField(required=True)
-    adress = forms.CharField(required=True)
-    city = forms.CharField(required=True)
-    country = forms.CharField(required=True)
+    username = forms.CharField(max_length=150, required=True, label="Nom d'utilisateur", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Nom d'utilisateur"}) )
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), required=True, label="Mot de passe")
+    email = forms.EmailField(required=True, label="Adresse email",  widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "example@mail.com"}) )
+    name = forms.CharField(required=True, label='Nom' , widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Nom de l'établissement"}) )
+    adress = forms.CharField(required=True, label='Adresse', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Adresse"}))
+    city = forms.CharField(required=True, label='Ville', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ville"}))
+    country = forms.CharField(required=True, label='Pays', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Pays"}))
 
     class Meta:
         model = UserProfile
-        fields = ['name', 'adress', 'city', 'country', 'study_domain']
+        fields = ['study_domain']
         labels = {
-            'name': "Nom de l'établissement",
-            'adress': "Adresse",
-            'city': "Ville",
-            'country': "Pays",
-            'study_domain': "Domaine d'étude",
+            'study_domain': "Domaine d'étude (A selectionner)",
         }
+        widgets = {
+            'study_domain': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    field_order = ['username', 'name', 'email', 'password', 'study_domain', 'adress', 'city', 'country']
+
 
     def save(self, commit=True):
         user = User.objects.create_user(
@@ -79,12 +84,14 @@ class OfferForm(forms.ModelForm):
         model = Offer
         fields = ['title', 'description', 'image_url', 'study_domain']
         labels = {
-            'title': "Titre de l'offre",
-            'description': "Description",
-            'image_url': "URL de l'image",
-            'study_domain': "Domaine d'étude",
+            'title': "Titre de l'offre ",
+            'description': "Description ",
+            'image_url': "URL de l'image ",
+            'study_domain': "Domaine d'étude (A selectionner) ",
         }
         widgets = {
-            'description': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
-            'image_url': forms.URLInput(attrs={'placeholder': 'https://example.com/image.jpg'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre de l\'offre'}),
+            'description': forms.Textarea(attrs={'rows': 4, 'cols': 40, 'class': 'form-control', 'placeholder': 'Description de l\'offre'}),
+            'image_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://example.com/image.jpg'}),
+            'study_domain': forms.Select(attrs={'class': 'form-control'}),
         }
