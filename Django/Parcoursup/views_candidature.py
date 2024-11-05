@@ -56,7 +56,7 @@ def postuler(request, offer_id):
 
 
 @login_required
-def gerer_candidature(request, candidature_id):
+def gerer_candidature(request, candidature_id, action):
     # Vérifier si la candidature existe
     try:
         candidature = Application.objects.get(id=candidature_id)
