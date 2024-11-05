@@ -6,6 +6,7 @@ class UserProfile(models.Model):
     USER_TYPE_CHOICES = [
         ('student', 'Étudiant'),
         ('etablissement', 'Établissement'),
+        ('admin', 'Admin'),
     ]
 
     STUDY_DOMAINS = [
