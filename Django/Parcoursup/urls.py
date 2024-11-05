@@ -24,6 +24,7 @@ urlpatterns = [
 
     # Candidatures :
     path('candidature/', views_candidature.candidature, name='candidature'),
+    path('offre/<int:offer_id>/postuler/', views_candidature.postuler, name='postuler'),
     
     
     # Utilisateurs
