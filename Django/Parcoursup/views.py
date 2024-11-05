@@ -40,7 +40,7 @@ def register_student(request):
             user_profile = form.save()  # Création de UserProfile via le formulaire
             login(request, user_profile.user)  # Connexion automatique de l'utilisateur après inscription
             messages.success(request, "Inscription réussie ! Bienvenue, étudiant.")
-            return redirect('home')
+            return redirect('login')
     else:
         form = StudentForm()
 
@@ -57,7 +57,7 @@ def register_etablissement(request):
             user_profile = form.save()  # Création de UserProfile via le formulaire
             login(request, user_profile.user)  # Connexion automatique de l'utilisateur après inscription
             messages.success(request, "Inscription réussie ! Bienvenue, établissement.")
-            return redirect('home')
+            return redirect('login')
     else:
         form = EtablissementForm()
 

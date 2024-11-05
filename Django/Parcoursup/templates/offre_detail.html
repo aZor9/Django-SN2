@@ -21,14 +21,20 @@
                     </p>
                 </div>
 
+
+                
+
+
                 <!-- Section de candidature -->
-                    {% if user.userprofile.user_type == 'student' %}
+                    {% if user.userprofile.user_type == 'student'%}
                     <div class="bg-light p-3">
-                        {% if has_applied %}
-                            {% for candidature in candidatures %}
-                                <p class="alert alert-info text-center">
-                                    Vous avez déjà postulé pour cette offre : {{ candidature.get_status_display }}
-                                </p>
+                        {% if has_applied%}
+                            {% for candidature in candidatures%}
+                                {% if user.userprofile.id == candidature.student.id %}
+                                    <p class="alert alert-info text-center">
+                                        Vous avez déjà postulé pour cette offre : {{ candidature.get_status_display }}
+                                    </p>
+                                {% endif %}
                             {% endfor %}
                         {% else %}
                             <p class="alert alert-success text-center mb-4">Vous pouvez postuler pour cette offre.</p>
