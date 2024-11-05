@@ -16,19 +16,37 @@
                     </p>
                 </div>
 
-                <div>
-                    <!-- Bouton de candidature pour les étudiants -->
-                    {% if user.userprofile.user_type == 'student' %}
-                        {% if not user.userprofile.application_set.filter(offer=offre).exists %}
-                            <form method="post" action="{% url 'postuler' offer_id=offre.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-success w-100 my-3">Postuler à cette offre</button>
-                            </form>
-                        {% else %}
-                            <p class="text-center text-success my-3">Vous avez déjà postulé pour cette offre.</p>
-                        {% endif %}
-                    {% endif %}
-                </div>
+                <h1>Candidatures pour l'offre {{ offre.id }}</h1>
+
+                {% if has_applied %}
+                    <p class="alert alert-warning">Vous avez déjà postulé pour cette offre.</p>
+                {% endif %}
+                
+
+                {% if candidatures %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Étudiant</th>
+                                <th>Offre</th>
+                                <th>Date de candidature</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for candidature in candidatures %}
+                                <tr>
+                                    <td>{{ candidature.student.user.username }}</td>
+                                    <td>{{ candidature.offer.title }}</td>
+                                    <td>{{ candidature.application_date }}</td>
+                                    <td>{{ candidature.status }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Aucune candidature trouvée pour cette offre.</p>
+                {% endif %}
 
                 <div class="text-center my-4">
                     <a href="{% url 'offre' %}" class="btn btn-secondary">Retour à la liste des offres</a>
@@ -37,9 +55,7 @@
         </div>
 
         <div class="col-md-4">
-
             <!-- Informations sur l'établissement dans une carte -->
-
             <div class="card shadow-sm border-light mb-4">
                 <div class="card-body">
                     <h6 class="text-center">Informations de l'établissement</h6>
@@ -52,7 +68,6 @@
             </div>
 
             <!-- Autres offres de l'établissement sous les informations -->
-
             <div class="card shadow-sm border-light mb-4">
                 <div class="card-body">
                     <h6 class="text-center">Autres offres de cet établissement</h6>
@@ -68,7 +83,7 @@
                                         {{ other_offer.title }}
                                     </a>
                                 </li>
-                            {% endif %}  
+                            {% endif %}
                         {% empty %}
                             <li class="list-group-item"
                                 style="background-color: white; border: 1px solid #dee2e6; margin-bottom: 10px;">
