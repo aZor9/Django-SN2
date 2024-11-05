@@ -26,7 +26,8 @@ urlpatterns = [
 
 
     # Candidatures :
-    path('candidature/', views_candidature.candidature, name='candidature'),
+    path('candidature/', views_candidature.candidature, name='candidature'), 
+    path('gerer_candidature/<int:candidature_id>/<str:action>/', views_candidature.gerer_candidature, name='gerer_candidature'),
     path('offre/<int:offer_id>/postuler/', views_candidature.postuler, name='postuler'),
     
     
