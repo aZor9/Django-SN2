@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-    
+
     {% if user.userprofile.user_type == 'etablissement' %}
         <h2 class="text-center mb-4">Mes offres disponibles</h2>
     {% elif user.userprofile.user_type == 'student' %}
@@ -10,19 +10,16 @@
         <section class="py-5 bg-primary text-white text-center rounded mt-5">
             <div class="container">
                 <h1>Rechercher une offre</h1>
-                <form class="row g-3 justify-content-center">
+                <form class="row g-3 justify-content-center" method="get">
                     <div class="col-md-4">
-                        <input type="text" class="form-control" placeholder="Nom de l'offre ou domaine">
+                        <input type="text" name="query" class="form-control" placeholder="Nom de l'offre" value="{{ query }}">
                     </div>
                     <div class="col-md-4">
-                        <select class="form-select">
-                            <option selected>Catégorie</option>
-                            <option value="science">Sciences</option>
-                            <option value="literature">Littérature</option>
-                            <option value="engineering">Ingénierie</option>
-                            <option value="arts">Arts</option>
-                            <option value="business">Affaires</option>
-                            <option value="medicine">Médecine</option>
+                        <select name="category" class="form-select">
+                            <option value="">Catégorie</option>
+                            {% for value, label in study_domains %}
+                                <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -31,62 +28,28 @@
                 </form>
             </div>
         </section>
-
-        <!-- Section des offres -->
-        <section class="py-5">
-            <div class="container">
-                <!-- <h2 class="text-center mb-4">Les offres disponibles</h2> -->
-                <div class="row">
-                
-                </div>
-            </div>
-        </section>
     {% endif %}
 
-
-
-
-
-    <div class="row">
+    <!-- Section des offres -->
+    <div class="row mt-4">
         {% if offres %}
             {% for offre in offres %}
-                {% if user.userprofile.user_type == 'etablissement' and offre.added_by == user.userprofile %}
-                    <!-- L'établissement voit uniquement ses propres offres -->
-                    <div class="col-md-4">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h4 class="card-title text-center">{{ offre.title }}</h4>
-                                <h5 class="card-title text-center">Par : {{ offre.added_by.name }}</h5>
-                                <h6 class="card-title text-center">{{ offre.study_domain }}</h6>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">{{ offre.title }}</h4>
+                            <h5 class="card-title text-center">Par : {{ offre.added_by.name }}</h5>
+                            <h6 class="card-title text-center">{{ offre.get_study_domain_display }}</h6>
 
-                                <div class="ratio ratio-4x3">
-                                    <img src="{{ offre.image_url }}" class="img-fluid rounded-3" alt="img">
-                                </div>
-                                <div class="text-center">
-                                    <a class="btn btn-primary mt-3" href="{% url 'offre_id' offer_id=offre.id %}">Voir plus</a>
-                                </div>
+                            <div class="ratio ratio-4x3">
+                                <img src="{{ offre.image_url }}" class="img-fluid rounded-3" alt="img">
+                            </div>
+                            <div class="text-center">
+                                <a class="btn btn-primary mt-3" href="{% url 'offre_id' offer_id=offre.id %}">Voir plus</a>
                             </div>
                         </div>
                     </div>
-                {% elif user.userprofile.user_type == 'student' %}
-                    <!-- Les étudiants voient toutes les offres -->
-                    <div class="col-md-4">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h4 class="card-title text-center">{{ offre.title }}</h4>
-                                <h5 class="card-title text-center">Par : {{ offre.added_by.name }}</h5>
-                                <h6 class="card-title text-center">{{ offre.study_domain }}</h6>
-
-                                <div class="ratio ratio-4x3">
-                                    <img src="{{ offre.image_url }}" class="img-fluid rounded-3" alt="img">
-                                </div>
-                                <div class="text-center">
-                                    <a class="btn btn-primary mt-3" href="{% url 'offre_id' offer_id=offre.id %}">Voir plus</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
+                </div>
             {% endfor %}
         {% else %}
             <p class="text-center">Pas d'offre en cours</p>
@@ -94,9 +57,6 @@
     </div>
 </div>
 
-
 <div style="height: 50px;"></div>
-
-
 
 {% endblock %}

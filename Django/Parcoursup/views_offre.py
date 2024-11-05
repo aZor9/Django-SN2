@@ -11,8 +11,26 @@ from .forms import *
 
 
 def offres(request):
+    # Récupérer les critères de recherche depuis les paramètres GET
+    query = request.GET.get('query', '')
+    selected_category = request.GET.get('category', '')
+
+    # Filtrer les offres en fonction des critères
     offres = Offer.objects.all()
-    return render(request, 'offre.html', {'offres': offres})
+    if query:
+        offres = offres.filter(title__icontains=query)  # Filtrer par nom de l'offre (partiellement)
+    if selected_category:
+        offres = offres.filter(study_domain=selected_category)  # Filtrer par domaine d'étude
+
+    study_domains = UserProfile.STUDY_DOMAINS  # Liste des domaines pour le menu déroulant
+
+    context = {
+        'offres': offres,
+        'study_domains': study_domains,
+        'query': query,
+        'selected_category': selected_category,
+    }
+    return render(request, 'offre.html', context)
 
 def offre(request, offer_id):
     # Récupérer l'offre
