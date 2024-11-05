@@ -1,13 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-créer une offre
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}  <!-- Affiche le formulaire avec des paragraphes -->
-    <button type="submit">Créer l'offre</button>
-</form>
+<div class="card-body">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3>créer une offre</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}  <!-- Affiche le formulaire avec des paragraphes -->
+                            <div class="text-center">
+                                <button class="btn btn-primary w-75" type="submit">Créer l'offre</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="height: 50px;"></div>
 
 
 

@@ -2,20 +2,23 @@
 
 {% block content %}
 <div class="container">
+    <h2 class="text-center mb-4">Les offres disponibles</h2>
     <div class="row">
         {% if offres %}
         {% for offre in offres %}
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title text-center">{{ offre.title }}</h5>
-                    <h5 class="card-title text-center">{{ offre.added_by.country }}</h5>
-                    <h5 class="card-title text-center">{{ offre.study_domain }}</h5>
+                    <h4 class="card-title text-center">{{ offre.title }}</h4>
+                    <h5 class="card-title text-center">Par : {{ offre.added_by.name }}</h5>
+                    <h6 class="card-title text-center">{{ offre.study_domain }}</h6>
 
                     <div class="ratio ratio-4x3">
                         <img src="{{ offre.image_url }}" class="img-fluid rounded-3" alt="img">
                     </div>
-                    <a class="btn btn-primary mt-3" href="{% url 'offre_id' offer_id=offre.id %}">Voir plus</a>
+                    <div class="text-center">
+                        <a class="btn btn-primary mt-3" href="{% url 'offre_id' offer_id=offre.id %}">Voir plus</a>
+                    </div>
 
                 </div>
             </div>
@@ -27,6 +30,7 @@
     </div>
 </div>
 
+<div style="height: 50px;"></div>
 
 
     <!-- Section de recherche d'offres -->
