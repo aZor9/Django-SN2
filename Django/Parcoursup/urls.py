@@ -20,6 +20,7 @@ urlpatterns = [
     path('offre/', views_offre.offres, name='offre'),
     path('offre/<int:offer_id>/', views_offre.offre, name='offre_id'),
     path('offre/create/', views_offre.offre_create, name='offre_create'),
+    path('offre/show/', views_offre.offre_show, name='offre_show'),
 
 
     # Candidatures :

@@ -3,9 +3,6 @@
 {% block content %}
 <div class="container">
 
-    {% if user.userprofile.user_type == 'etablissement' %}
-        <h2 class="text-center mb-4">Mes offres disponibles</h2>
-    {% elif user.userprofile.user_type == 'student' %}
         <!-- Section de recherche d'offres -->
         <section class="py-5 bg-primary text-white text-center rounded mt-5">
             <div class="container">
@@ -28,7 +25,6 @@
                 </form>
             </div>
         </section>
-    {% endif %}
 
     <!-- Section des offres -->
     <div class="row mt-4">

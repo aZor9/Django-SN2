@@ -19,9 +19,6 @@
                     <!-- Lien spécifique pour l'utilisateur étudiant -->
                     {% if user.userprofile.user_type == 'student' %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'offre' %}">Les offres</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'candidature' %}">Mes candidatures</a>
                         </li>
                     {% endif %}
@@ -29,14 +26,17 @@
                     <!-- Lien spécifique pour l'utilisateur établissement -->
                     {% if user.userprofile.user_type == 'etablissement' %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'offre' %}">Mes offres</a>
+                            <a class="nav-link" href="{% url 'offre_create' %}">Créer une offre</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'offre_create' %}">Créer une offre</a>
+                            <a class="nav-link" href="{% url 'offre_show' %}">Mes offre</a>
                         </li>
                     {% endif %}
 
                     <!-- Lien commun pour tous les utilisateurs connectés -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'offre' %}">Les offres</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-danger text-white" href="{% url 'logout' %}">Déconnexion</a>
                     </li>

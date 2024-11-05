@@ -56,6 +56,10 @@ def offre(request, offer_id):
 
 # def offer_success(request):
 #     return render(request, 'offre.html')
+def offre_show(request):
+    return render(request, 'offre_show.html')
+
+
 
 def offre_create(request):
     if request.method == 'POST':
