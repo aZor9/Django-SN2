@@ -16,7 +16,7 @@
                             <p><strong>Domaine d'étude :</strong> {{ offre.get_study_domain_display }}</p>
                             <a href="{% url 'offre_id' offer_id=offre.id %}" class="btn btn-primary">Voir Détails</a>
                             {% if user_profile.user_type == 'etablissement' %}
-                                <a href="{% url 'offre_edit' offer_id=offre.id %}" class="btn btn-warning mt-2">Modifier</a>
+                                <a href="{% url 'offre_edit' offer_id=offre.id %}" class="btn btn-warning">Modifier</a>
                             {% endif %}
                         </div>
                     </div>
