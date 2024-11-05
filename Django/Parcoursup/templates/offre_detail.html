@@ -16,7 +16,19 @@
                     </p>
                 </div>
 
-
+                <div>
+                    <!-- Bouton de candidature pour les étudiants -->
+                    {% if user.userprofile.user_type == 'student' %}
+                        {% if not user.userprofile.application_set.filter(offer=offre).exists %}
+                            <form method="post" action="{% url 'postuler' offer_id=offre.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success w-100 my-3">Postuler à cette offre</button>
+                            </form>
+                        {% else %}
+                            <p class="text-center text-success my-3">Vous avez déjà postulé pour cette offre.</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
 
                 <div class="text-center my-4">
                     <a href="{% url 'offre' %}" class="btn btn-secondary">Retour à la liste des offres</a>
