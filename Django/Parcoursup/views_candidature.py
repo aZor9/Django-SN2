@@ -11,9 +11,16 @@ from django.utils import timezone
 
 
 
+@login_required
 def candidature(request):
-    candidatures = Application.objects.all()
-    return render(request, 'candidature.html', {'candidatures': candidatures})
+    # Vérifie si l'utilisateur est un étudiant
+    if request.user.userprofile.user_type != 'student':
+        return redirect('home')  # Redirige si ce n'est pas un étudiant
+
+    # Récupère les candidatures de l'étudiant
+    applications = Application.objects.filter(student=request.user.userprofile)
+
+    return render(request, 'candidature.html', {'applications': applications})
 
 @login_required
 def postuler(request, offer_id):

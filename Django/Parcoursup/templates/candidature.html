@@ -2,8 +2,35 @@
 
 {% block content %}
 <div class="container">
-    
-    candidature
+    <h2 class="text-center mb-4">Mes candidatures</h2>
+
+    <div class="row">
+        {% if applications %}
+            {% for application in applications %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">{{ application.offer.title }}</h4>
+                            <h5 class="card-title text-center">Par : {{ application.offer.added_by.name }}</h5>
+                            <h6 class="card-title text-center">{{ application.offer.study_domain }}</h6>
+
+                            <div class="ratio ratio-4x3">
+                                <img src="{{ application.offer.image_url }}" class="img-fluid rounded-3" alt="img">
+                            </div>
+                            <p class="text-center">Statut : {{ application.get_status_display }}</p>
+                            <div class="text-center">
+                                <a class="btn btn-primary mt-3" href="{% url 'offre_id' offer_id=application.offer.id %}">Voir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">Vous n'avez encore fait aucune candidature</p>
+        {% endif %}
+    </div>
 </div>
+
+<div style="height: 50px;"></div>
 
 {% endblock %}
