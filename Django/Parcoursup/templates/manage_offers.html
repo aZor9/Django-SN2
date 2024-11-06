@@ -10,8 +10,7 @@
                     <tr>
                         <th>Titre</th>
                         <th>Description</th>
-                        <th>Statut</th>
-                        <th>Action</th>
+                        <th>Annonceur</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,23 +18,7 @@
                     <tr>
                         <td>{{ offer.title }}</td>
                         <td>{{ offer.description }}</td>
-                        <td>
-                            {% if offer.is_approved %}
-                            <span class="badge bg-success">Approuvée</span>
-                            {% else %}
-                            <span class="badge bg-warning">En attente</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <div class="d-flex">
-                                {% if not offer.is_approved %}
-                                <a href="{% url 'approve_offer' offer.id 'approve' %}" class="btn btn-outline-success btn-sm me-2">Approuver</a>
-                                <a href="{% url 'approve_offer' offer.id 'reject' %}" class="btn btn-outline-danger btn-sm">Rejeter</a>
-                                {% else %}
-                                <span class="badge bg-success">Action terminée</span>
-                                {% endif %}
-                            </div>
-                        </td>
+                        <td>{{ offer.added_by.name }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
