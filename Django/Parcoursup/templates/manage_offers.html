@@ -1,34 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Gestion des offres</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Titre</th>
-        <th>Description</th>
-        <th>Statut</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for offer in offers %}
-      <tr>
-        <td>{{ offer.title }}</td>
-        <td>{{ offer.description }}</td>
-        <td>
-          {% if offer.is_approved %}
-            Approuvée
-          {% else %}
-            En attente
-          {% endif %}
-        </td>
-        <td>
-          <a href="{% url 'approve_offer' offer.id 'approve' %}" class="btn btn-success">Approuver</a>
-          <a href="{% url 'approve_offer' offer.id 'reject' %}" class="btn btn-danger">Rejeter</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div class="container my-5">
+    <h1 class="text-center mb-4 text-primary">Gestion des offres</h1>
+    <div class="card shadow border-0">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Description</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for offer in offers %}
+                    <tr>
+                        <td>{{ offer.title }}</td>
+                        <td>{{ offer.description }}</td>
+                        <td>
+                            {% if offer.is_approved %}
+                            <span class="badge bg-success">Approuvée</span>
+                            {% else %}
+                            <span class="badge bg-warning">En attente</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="d-flex">
+                                {% if not offer.is_approved %}
+                                <a href="{% url 'approve_offer' offer.id 'approve' %}" class="btn btn-outline-success btn-sm me-2">Approuver</a>
+                                <a href="{% url 'approve_offer' offer.id 'reject' %}" class="btn btn-outline-danger btn-sm">Rejeter</a>
+                                {% else %}
+                                <span class="badge bg-success">Action terminée</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}
