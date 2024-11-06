@@ -64,5 +64,18 @@ def register_etablissement(request):
     return render(request, 'register_etablissement.html', {'form': form})
 
 
-def profile(request):
-    return render(request, 'profile.html')
+def edit_student_profile(request):
+    # Vérifie que l'utilisateur est un étudiant
+    user_profile = UserProfile.objects.get(user=request.user)
+    if user_profile.user_type != 'student':
+        return redirect('home')  # Redirige si l'utilisateur n'est pas un étudiant
+
+    if request.method == 'POST':
+        form = StudentProfileForm(request.POST, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile_student')  # Redirige vers la page de profil après la mise à jour
+    else:
+        form = StudentProfileForm(instance=user_profile)
+
+    return render(request, 'profile_student.html', {'form': form})

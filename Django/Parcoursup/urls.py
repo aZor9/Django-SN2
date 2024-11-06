@@ -28,7 +28,8 @@ urlpatterns = [
     path('offre/<int:offer_id>/postuler/', views_candidature.postuler, name='postuler'),  # Postuler à une offre
 
     # Utilisateurs :
-    path('profile/', views.profile, name='profile'),  # Profil utilisateur
+    path('profile/', views.edit_student_profile, name='profile_student'),  # Profil utilisateur
+
 
     # Admin : 
     path('admin_dashboard/', views_admin.admin_dashboard, name='admin_dashboard'),  # Tableau de bord admin

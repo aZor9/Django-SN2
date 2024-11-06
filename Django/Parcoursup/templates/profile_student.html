@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5 col-6">
+    <!-- Titre de la section -->
+    <h2 class="text-center">Modifier le Profil Étudiant</h2>
+
+    <!-- Formulaire de modification de profil -->
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+
+        <!-- Affichage du formulaire avec .as_p pour une disposition simple -->
+        {{ form.as_p }}
+
+        <!-- Boutons de soumission et d'annulation -->
+        <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+            <a href="{% url 'profile_student' %}" class="btn btn-secondary">Annuler</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -95,3 +95,18 @@ class OfferForm(forms.ModelForm):
             'image_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://example.com/image.jpg'}),
             'study_domain': forms.Select(attrs={'class': 'form-control'}),
         }
+
+
+class StudentProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['firstname', 'study_domain']
+        widgets = {
+            'firstname': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Prénom'}),
+            'study_domain': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(StudentProfileForm, self).__init__(*args, **kwargs)
+        self.fields['firstname'].label = "Prénom"
+        self.fields['study_domain'].label = "Domaine d'étude"
