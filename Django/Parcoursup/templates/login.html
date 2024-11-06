@@ -10,44 +10,49 @@
 
 <body>
     {% include 'navbar.html' %}
-    
-    <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6">
-                <h2 class="text-center mb-4">Connexion</h2>
 
-                <!-- Message d'erreur -->
-                <!-- {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert 
-                            {% if message.tags == 'success' %}alert-success
-                            {% elif message.tags == 'error' %}alert-danger
-                            {% elif message.tags == 'warning' %}alert-warning
-                            {% elif message.tags == 'info' %}alert-info
-                            {% endif %}">
-                            <p>{{ message }}</p>
-                        </div>
-                    {% endfor %}
-                {% endif %} -->
+    <!-- Background image container using Bootstrap classes and inline styles -->
+    <div class="d-flex align-items-center justify-content-center vh-100" style="background-image: url('https://www.parcoursup.gouv.fr/sites/default/files/database/images/desktop/2023-10/travaux-pratiques-12.jpg'); 
+                background-size: cover; 
+                background-position: center; 
+                background-repeat: no-repeat;">
 
-                <form method="post" action="{% url 'login' %}">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Nom d'utilisateur</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+        <div class="container col-md-6 bg-white p-5 rounded shadow">
+            <h2 class="text-center mb-4">Connexion</h2>
+
+            <!-- Error message section (optional) -->
+            <!-- {% if messages %}
+                {% for message in messages %}
+                    <div class="alert 
+                        {% if message.tags == 'success' %}alert-success
+                        {% elif message.tags == 'error' %}alert-danger
+                        {% elif message.tags == 'warning' %}alert-warning
+                        {% elif message.tags == 'info' %}alert-info
+                        {% endif %}">
+                        <p>{{ message }}</p>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Mot de passe</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Se connecter</button>
-                </form>
+                {% endfor %}
+            {% endif %} -->
 
-                <p class="text-center mt-3">
-                    Vous n'avez pas de compte ? <br>
-                    Inscription : <a href="{% url 'register_etudiant' %}">Etudiant</a> | <a href="{% url 'register_etablissement' %}">Etablissement</a>
-                </p>
-            </div>
+            <!-- Login form -->
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label">Nom d'utilisateur</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+            </form>
+
+            <p class="text-center mt-3">
+                Vous n'avez pas de compte ? <br>
+                Inscription : <a href="{% url 'register_etudiant' %}">Etudiant</a> | <a
+                    href="{% url 'register_etablissement' %}">Etablissement</a>
+            </p>
         </div>
     </div>
 
