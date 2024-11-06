@@ -5,11 +5,22 @@
     <!-- Titre de la section -->
     <h2 class="text-center">Modifier le Profil Étudiant</h2>
 
+    <!-- Affichage du message de succès ou d'erreur -->
+    {% if success_message %}
+    <div class="alert alert-success mt-3">
+        {{ success_message }}
+    </div>
+    {% endif %}
+
+    {% if error_message %}
+    <div class="alert alert-danger mt-3">
+        {{ error_message }}
+    </div>
+    {% endif %}
+
     <!-- Formulaire de modification de profil -->
     <form method="post" class="mt-4">
         {% csrf_token %}
-
-        <!-- Affichage du formulaire avec .as_p pour une disposition simple -->
         {{ form.as_p }}
 
         <!-- Boutons de soumission et d'annulation -->

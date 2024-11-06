@@ -74,7 +74,13 @@ def edit_student_profile(request):
         form = StudentProfileForm(request.POST, instance=user_profile)
         if form.is_valid():
             form.save()
-            return redirect('profile_student')  # Redirige vers la page de profil après la mise à jour
+            # Ajoutez un message de succès
+            success_message = "Profil mis à jour avec succès !"
+            return render(request, 'profile_student.html', {'form': form, 'success_message': success_message})
+        else:
+            # Ajoutez un message d'erreur
+            error_message = "Une erreur est survenue. Veuillez réessayer."
+            return render(request, 'profile_student.html', {'form': form, 'error_message': error_message})
     else:
         form = StudentProfileForm(instance=user_profile)
 
