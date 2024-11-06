@@ -2,7 +2,6 @@
 
 {% block content %}
 <div class="container">
-
     <!-- Section de recherche d'offres -->
     <section class="py-5 bg-primary text-white text-center rounded mt-5">
         <div class="container">
@@ -16,7 +15,8 @@
                     <select name="category" class="form-select">
                         <option value="">Catégorie</option>
                         {% for value, label in study_domains %}
-                        <option value="{{ value }}" {% if selected_category==value %}selected{% endif %}>{{ label }}
+                        <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>
+                            {{ label }}
                         </option>
                         {% endfor %}
                     </select>

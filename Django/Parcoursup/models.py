@@ -46,7 +46,7 @@ class UserProfile(models.Model):
 class Offer(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    image_url = models.URLField(max_length=50000)
+    image_url = models.URLField(max_length=500)
     study_domain = models.CharField(
         max_length=50,
         choices=UserProfile.STUDY_DOMAINS,
