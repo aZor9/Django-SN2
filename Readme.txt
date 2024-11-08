@@ -1,11 +1,30 @@
-A installer avant tout premier lancement : 
-- Django : 
-    ``pip install Django``
 
-Pour lancer le serveur : 
-    ```python manage.py runserver```
-    si cela ne fonctionne pas : se deplacer dans le repertoire Django avec : 
-        ``cd .\Django\``
+# Projet Django
 
+## PrÃ©requis
 
-admin : Azerty10 : Administrateur
+Avant le premier lancement, installez Django :
+
+```bash
+pip install Django
+```
+
+## Lancer le serveur
+
+Pour dÃ©marrer le serveur, exÃ©cutez la commande suivante :
+
+```bash
+python manage.py runserver
+```
+
+Si cela ne fonctionne pas, assurez-vous d'Ãªtre dans le rÃ©pertoire du projet Django :
+
+```bash
+cd .\Django\
+```
+
+## Identifiants
+
+| Nom d'utilisateur | Mot de passe | RÃ´le           |
+|-------------------|--------------|----------------|
+| admin            | Azerty10     | Administrateur | 
