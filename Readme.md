@@ -1,7 +1,7 @@
 
 # Projet Django
 
-## PrÃ©requis
+## Prérequis
 
 Avant le premier lancement, installez Django :
 
@@ -11,13 +11,13 @@ pip install Django
 
 ## Lancer le serveur
 
-Pour dÃ©marrer le serveur, exÃ©cutez la commande suivante :
+Pour démarrer le serveur, exécutez la commande suivante :
 
 ```bash
 python manage.py runserver
 ```
 
-Si cela ne fonctionne pas, assurez-vous d'Ãªtre dans le rÃ©pertoire du projet Django :
+Si cela ne fonctionne pas, assurez-vous d'être dans le répertoire du projet Django :
 
 ```bash
 cd .\Django\
@@ -25,6 +25,8 @@ cd .\Django\
 
 ## Identifiants
 
-| Nom d'utilisateur | Mot de passe | RÃ´le           |
+| Nom d'utilisateur | Mot de passe | Rôle           |
 |-------------------|--------------|----------------|
 | admin            | Azerty10     | Administrateur | 
+|aurelien|Azerty10|étudiant|
+|EPSI_MONTPELLIER|Azerty10| établissement |
